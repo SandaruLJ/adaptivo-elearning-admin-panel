@@ -1,0 +1,20 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+:root {
+  --orange: #ff9c3f;
+  --yellow: #ffd25a;
+  --gradient: linear-gradient(177.02deg, #ff9c3f 0%, #ffd25a 72.73%);
+}
+.main {
+  padding-top: 75px;
+  padding-left: 255px;
+  padding-bottom: 24px;
+  transition: ease-in;
+  transition-delay: 0ms;
+}

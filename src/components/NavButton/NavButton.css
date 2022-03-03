@@ -1,0 +1,33 @@
+.navButton.MuiListItem-root {
+  white-space: nowrap;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+.navButton.MuiListItem-button:hover {
+  background-color: white !important;
+  border-radius: 7px;
+  transition: "ease-in";
+  transition-duration: 250ms;
+}
+.navButton.MuiListItem-button:hover .MuiListItemText-primary {
+  color: black;
+  transition: "ease-in";
+  transition-duration: 250ms;
+}
+.navButton.MuiListItem-button:hover .MuiListItemIcon-root {
+  color: black;
+  transition: "ease-in";
+  transition-duration: 250ms;
+}
+
+.selected {
+  background: linear-gradient(var(--gold), var(--gold));
+}
+
+.selected::after {
+  content: "";
+  border: solid 1.5em transparent;
+  border-right-color: var(--lightGrey);
+  left: 11.4em;
+  position: absolute;
+}

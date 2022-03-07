@@ -8,6 +8,8 @@
   overflow-x: hidden;
   transition: ease-in;
   transition-duration: var(--animDuration);
+  background-size: cover;
+  background-repeat: round;
 }
 
 .extended {

@@ -1,8 +1,8 @@
 import React from "react";
 import "./Navbar.css";
 
-import { Dashboard } from "@material-ui/icons";
-import { Grid, Link, List } from "@material-ui/core";
+import { Dashboard } from "@mui/icons-material";
+import { Grid, Link, List } from "@mui/material";
 import NavButton from "../NavButton/NavButton";
 
 const navLinks = [

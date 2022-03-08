@@ -27,6 +27,9 @@
   transition: ease-in;
   transition-duration: var(--animDuration);
   user-select: none;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .logoBig {

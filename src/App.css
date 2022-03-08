@@ -12,9 +12,10 @@
   --gradient: linear-gradient(177.02deg, #ff9c3f 0%, #ffd25a 72.73%);
 }
 .main {
-  padding-top: 75px;
-  padding-left: 255px;
+  padding-top: 100px;
+  padding-left: 250px;
   padding-bottom: 24px;
+  padding-right: 24px;
   transition: ease-in;
   transition-delay: 0ms;
 }

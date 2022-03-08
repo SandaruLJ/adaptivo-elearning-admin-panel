@@ -1,0 +1,14 @@
+.titlebar {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  color: #272727;
+}
+.title {
+  font-weight: 700;
+  font-size: 22px;
+}
+.titlebar .MuiLink-root {
+  color: #868686;
+  font-weight: 600;
+}

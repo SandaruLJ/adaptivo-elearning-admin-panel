@@ -2,6 +2,8 @@
   white-space: nowrap;
   padding-top: 4px;
   padding-bottom: 4px;
+  font-weight: 500;
+  color: white;
 }
 .navButton.MuiListItem-button:hover {
   background-color: white !important;
@@ -30,4 +32,26 @@
   border-right-color: var(--lightGrey);
   left: 11.4em;
   position: absolute;
+}
+
+.iconRoot {
+  padding-inline-start: 20px;
+  padding-inline-end: 20px;
+  color: white;
+  transition: ease-in;
+  transition-duration: 250ms;
+}
+.textPrimary .MuiListItemIcon-root {
+  font-weight: 500;
+  color: white;
+  transition: ease-in;
+  transition-duration: 250ms;
+  font-size: 18px;
+}
+.textPrimary .MuiTypography-root {
+  font-weight: 500;
+  color: white;
+  transition: ease-in;
+  transition-duration: 250ms;
+  font-size: 18px;
 }

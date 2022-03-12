@@ -1,0 +1,21 @@
+.button.MuiButton-root {
+  transition: none;
+  font-weight: 600;
+  margin-top: 20px;
+  width: 100px;
+}
+
+.orange.MuiButton-root {
+  background: linear-gradient(95.06deg, #ff9e43 0%, #ffd25a 107.76%);
+}
+.orange.MuiButton-root:hover {
+  background: #ff9e43;
+}
+.grey.MuiButton-root {
+  background: #e7e7e7;
+  color: #474747;
+}
+.grey.MuiButton-root:hover {
+  background: #808080;
+  color: white;
+}

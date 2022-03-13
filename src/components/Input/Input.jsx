@@ -5,7 +5,7 @@ import "./Input.css";
 const Input = (props) => {
   return (
     <div class="input">
-      <InputLabel shrink htmlFor={props.id}>
+      <InputLabel shrink htmlFor={props.id} className={props.error ? "error" : ""}>
         {props.label}
       </InputLabel>
       <OutlinedInput
@@ -21,7 +21,9 @@ const Input = (props) => {
         onChange={props.onChange}
         disabled={props.disabled}
         hidden={props.hidden}
+        error={props.error ? true : false}
       />
+      <p className="error">{props.error}</p>
     </div>
   );
 };

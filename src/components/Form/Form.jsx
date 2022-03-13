@@ -6,32 +6,24 @@ import useForm from "../useForm";
 import validate from "../../helpers/validateInfo";
 
 function Form(props) {
-  const url = props.url;
   const inputs = props.inputs;
-  const names = props.names;
-  const callbackSuccess = props.callbackSuccess;
-  const callbackFail = props.callbackFail;
+  const callback = props.callback;
+  const callbackCancel = props.callbackCancel;
   const buttons = props.btns;
   const singleColumn = props.singleColumn;
-
-  const progress = {
-    color: "#E2BC7F",
-    marginBlockStart: "8px",
-    marginInlineEnd: "8px",
-    float: "right",
-  };
-
-  // Handle isSubmitting state for submitting feedback
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const callbackIsSubmitting = (state) => setIsSubmitting(state);
+  let names = {};
+  props.inputs.map((input) => {
+    const name = input.name;
+    names[input.name] = "";
+  });
 
   //Import methods from useForm hook
-  const { handleChange, handleSubmit, values, errors } = useForm(callbackSuccess, validate, names, url, callbackIsSubmitting);
+  const { handleChange, handleSubmit, values, errors } = useForm(callback, validate, names);
 
   // Cancel button action
   const handleCancel = (event) => {
     event.preventDefault();
-    callbackFail();
+    callbackCancel();
   };
 
   return (
@@ -71,13 +63,20 @@ function Form(props) {
                 .slice(0)
                 .reverse()
                 .map((btn) => {
-                  return <CustomButton color={btn.color} name={btn.name} type={btn.type} key={btn.name} disabled={isSubmitting} onclick={btn.type === "cancel" ? handleCancel : () => {}} />;
+                  return (
+                    <CustomButton
+                      color={btn.color}
+                      loading={props.isLoading}
+                      name={btn.name}
+                      type={btn.type}
+                      key={btn.name}
+                      disabled={props.isLoading}
+                      onclick={btn.type === "cancel" ? handleCancel : () => {}}
+                    />
+                  );
                 })}
             </Grid>
           }
-
-          {/* Submitting progress indicator */}
-          {isSubmitting && <CircularProgress size={"2.2em"} style={progress} data-testid="progress" />}
         </div>
       </form>
     </div>

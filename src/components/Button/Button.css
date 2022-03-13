@@ -2,11 +2,12 @@
   transition: none;
   font-weight: 600;
   margin-top: 20px;
-  width: 100px;
+  width: 120px;
 }
 
 .orange.MuiButton-root {
   background: linear-gradient(95.06deg, #ff9e43 0%, #ffd25a 107.76%);
+  color: white !important;
 }
 .orange.MuiButton-root:hover {
   background: #ff9e43;

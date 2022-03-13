@@ -5,7 +5,7 @@ const save = (url, data) => {
       "Content-Type": "application/json",
     },
     method: "POST",
-    body: data,
+    body: JSON.stringify(data),
   })
     .then((res) => res.json())
     .then((data) => data)
@@ -30,7 +30,7 @@ const update = (url, data) => {
       "Content-Type": "application/json",
     },
     method: "PUT",
-    body: data,
+    body: JSON.stringify(data),
   })
     .then((res) => res.json())
     .then((data) => data)

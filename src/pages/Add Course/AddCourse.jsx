@@ -46,15 +46,14 @@ const buttons = [
     type: "cancel",
   },
 ];
-const url = `${process.env.REACT_APP_URL}/api/courses`;
 
 const AddCourse = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   function submitForm(data) {
     setIsLoading(true);
-    let values = JSON.stringify(data);
-    const response = addCourse(url, values);
+    // let values = JSON.stringify(data);
+    const response = addCourse(data);
     setIsLoading(false);
   }
   function cancel() {

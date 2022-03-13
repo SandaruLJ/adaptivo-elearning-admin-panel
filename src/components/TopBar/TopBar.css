@@ -1,5 +1,5 @@
 .topBar {
-  height: 56px;
+  height: 70px;
   position: fixed;
   left: 230px;
   z-index: 2;
@@ -9,6 +9,7 @@
   transition: ease-in;
   transition-duration: var(--animDuration);
   display: flex;
+  background-color: #f5f8fa;
 }
 
 .topBarExtended {

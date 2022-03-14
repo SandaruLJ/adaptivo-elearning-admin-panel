@@ -1,11 +1,11 @@
-import { InputLabel, OutlinedInput } from "@mui/material";
+import { InputAdornment, InputLabel, OutlinedInput } from "@mui/material";
 import React from "react";
 import "./Input.css";
 
 const Input = (props) => {
   return (
     <div class="input">
-      <InputLabel shrink htmlFor={props.id} className={props.error ? "error" : ""}>
+      <InputLabel shrink htmlFor={props.id} className={`${props.error ? "error" : ""} ${props.hideLabel ? "hidden" : ""}`}>
         {props.label}
       </InputLabel>
       <OutlinedInput
@@ -22,6 +22,7 @@ const Input = (props) => {
         disabled={props.disabled}
         hidden={props.hidden}
         error={props.error ? true : false}
+        endAdornment={<InputAdornment position="end">{props.endIcon}</InputAdornment>}
       />
       <p className="error">{props.error}</p>
     </div>

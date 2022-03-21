@@ -4,7 +4,7 @@ import Form from "../../components/Form/Form";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
 import "./AddUser.css";
-import { addUser } from "./AddUserService";
+import { addUser } from "../../service/user.service";
 
 const breadcrumbs = [
   {
@@ -45,21 +45,27 @@ const basicInputs = [
   {
     label: "Date of Birth",
     type: "date",
-    name: "birthdate"
+    name: "dob"
   },
   {
     label: "Preferred Language",
     type: "text",
     name: "preferredLanguage"
   },
-]
-
-const schoolInputs = [
   {
     label: "Is a School Student",
-    type: "text",
-    name: "isSchoolStudent"
+    type: "radio",
+    name: "isSchoolStudent",
+    options: [
+      { value: true, label: "Yes" },
+      { value: false, label: "No" }
+    ],
+    defaultValue: false,
+    singleColumn: true
   },
+];
+
+const schoolInputs = [
   {
     label: "Grade",
     type: "number",
@@ -99,14 +105,14 @@ const AddUser = () => {
   }
   const tabs = [
     {
-      label: "Basic Information",
+      label: "Personal Information",
       icon: <Assignment />,
-      body: <Form inputs={basicInputs} callback={submitForm} callbackCancel={cancel} btns={buttons} singleColumn={true} isLoading={isLoading} />,
+      body: <Form inputs={basicInputs} callback={submitForm} callbackCancel={cancel} btns={buttons} isLoading={isLoading} />,
     },
     {
       label: "School Information",
       icon: <Assignment />,
-      body: <Form inputs={schoolInputs} callback={submitForm} callbackCancel={cancel} btns={buttons} singleColumn={true} isLoading={isLoading} />,
+      body: <Form inputs={schoolInputs} callback={submitForm} callbackCancel={cancel} btns={buttons} isLoading={isLoading} />,
     },
   ];
   return (

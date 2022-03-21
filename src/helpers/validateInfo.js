@@ -7,10 +7,22 @@ export default function validateInfo(values) {
       errors.fname = "Please enter a First name";
     }
   }
+  //Validate First name
+  if (values.hasOwnProperty("firstname")) {
+    if (!values.firstname.trim()) {
+      errors.firstname = "Please enter a first name";
+    }
+  }
   //Validate Last name
   if (values.hasOwnProperty("lname")) {
     if (!values.lname.trim()) {
       errors.lname = "Please enter a Last name";
+    }
+  }
+  //Validate Last name
+  if (values.hasOwnProperty("lastname")) {
+    if (!values.lastname.trim()) {
+      errors.lastname = "Please enter a last name";
     }
   }
   //validate Event name

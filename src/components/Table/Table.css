@@ -1,0 +1,35 @@
+.container {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  color: #272727;
+  margin-bottom: 25px;
+  padding-bottom: 100px;
+}
+.all-grid .MuiDataGrid-columnHeaders {
+  background-color: #f9fafb;
+  justify-content: space-between;
+}
+
+.all-grid .MuiDataGrid-columnHeaderTitle {
+  font-weight: 700;
+  font-size: 16px;
+}
+.container .MuiButtonBase-root.MuiCheckbox-root.Mui-checked {
+  color: var(--orange);
+}
+.container .MuiDataGrid-cell.table-cell {
+  justify-content: center;
+}
+.table-search {
+  width: 30%;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.num-entries {
+  font-weight: 600;
+  color: #6f6f6f;
+}
+.container .MuiCircularProgress-root {
+  color: var(--orange);
+}

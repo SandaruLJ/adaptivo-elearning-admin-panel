@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Form from "../../components/Form/Form";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
+import { addCourse } from "../../service/course.service";
 import "./AddCourse.css";
-import { addCourse } from "./AddCourseService";
 
 const breadcrumbs = [
   {
@@ -52,10 +52,10 @@ const AddCourse = () => {
 
   function submitForm(data) {
     setIsLoading(true);
-    // let values = JSON.stringify(data);
     const response = addCourse(data);
     setIsLoading(false);
   }
+
   function cancel() {
     console.log("Cancel");
   }

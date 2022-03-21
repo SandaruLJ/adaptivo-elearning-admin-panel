@@ -28,7 +28,7 @@ function App() {
   }
 
   return (
-    <Authenticator hideSignUp={true} variation="modal" components={customAuthComponents}>
+    <Authenticator className="auth" hideSignUp={true} variation="modal" components={customAuthComponents}>
       {({ signOut }) => (
           <div className="App">
             <ThemeProvider theme={theme}>

@@ -5,11 +5,14 @@ import { BrowserRouter as Router, Redirect, Route, Routes } from "react-router-d
 
 import "./Main.css";
 import AddCourse from "../Add Course/AddCourse";
+import AddQuestion from "../Add Question/AddQuestion";
+
 const Main = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Dashboard />}></Route>
       <Route exact path="/courses" element={<AddCourse />}></Route>
+      <Route exact path="/qna" element={<AddQuestion />}></Route>
     </Routes>
   );
 };

@@ -4,7 +4,8 @@ import Form from "../../components/Form/Form";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
 import "./AddCategory.css";
-import { addCategory } from "./AddCategoryService";
+import {addCategory} from "../../service/category.service";
+
 
 const breadcrumbs = [
     {

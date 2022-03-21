@@ -47,6 +47,7 @@ function Form(props) {
                     maxLength={input.maxLength}
                     disabled={input.disabled}
                     hidden={input.hidden}
+                    hideLabel={false}
                   />
                 </Grid>
               );

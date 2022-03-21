@@ -11,8 +11,8 @@ const save = (url, data) => {
     .then((data) => data)
     .catch((err) => console.log(err));
 };
-const getAll = (url) => {
-  fetch(url)
+const getAll = async (url) => {
+  return await fetch(url)
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => console.log(err));

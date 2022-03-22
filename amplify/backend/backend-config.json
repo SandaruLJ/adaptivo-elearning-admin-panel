@@ -1,0 +1,11 @@
+{
+  "auth": {
+    "elearningadmind999a8b9": {
+      "service": "Cognito",
+      "serviceType": "imported",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

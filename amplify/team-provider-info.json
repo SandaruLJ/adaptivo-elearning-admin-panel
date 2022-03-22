@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-elearningadmin-dev-94953-authRole",
+      "UnauthRoleArn": "arn:aws:iam::436252464762:role/amplify-elearningadmin-dev-94953-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::436252464762:role/amplify-elearningadmin-dev-94953-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-elearningadmin-dev-94953-deployment",
+      "UnauthRoleName": "amplify-elearningadmin-dev-94953-unauthRole",
+      "StackName": "amplify-elearningadmin-dev-94953",
+      "StackId": "arn:aws:cloudformation:ap-south-1:436252464762:stack/amplify-elearningadmin-dev-94953/9c683730-a5d7-11ec-af6f-06ccd4637ba2",
+      "AmplifyAppId": "d2qyisojqtc1tp"
+    },
+    "categories": {
+      "auth": {
+        "elearningadmind999a8b9": {
+          "userPoolId": "ap-south-1_HwrCqDg1Q",
+          "userPoolName": "Admins",
+          "webClientId": "ajhgqgj46dn7b228be0mt2b56",
+          "nativeClientId": "ajhgqgj46dn7b228be0mt2b56"
+        }
+      }
+    }
+  }
+}

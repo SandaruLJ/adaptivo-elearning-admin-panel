@@ -10,6 +10,8 @@ import AllCourse from "../All Course/AllCourse";
 import AddUser from "../Add User/AddUser";
 import AllUsers from "../All Users/AllUsers";
 
+import AddCategory from "../Add Category/AddCategory";
+import AllCategory from "../AllCategory/AllCategory";
 const Main = () => {
   return (
     <Routes>
@@ -20,6 +22,8 @@ const Main = () => {
       <Route exact path="/courses/add" element={<AddCourse />}></Route>
       <Route exact path="/users" element={<AllUsers />}></Route>
       <Route exact path="/users/add" element={<AddUser />}></Route>
+      <Route exact path="/categories/add" element={<AddCategory />}></Route>
+      <Route exact path="/categories" element={<AllCategory />}></Route>
     </Routes>
   );
 };

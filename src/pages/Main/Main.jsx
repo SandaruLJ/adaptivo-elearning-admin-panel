@@ -8,6 +8,8 @@ import AddCourse from "../Add Course/AddCourse";
 import AddQuestion from "../Add Question/AddQuestion";
 
 import AllCourse from "../All Course/AllCourse";
+import AddUser from "../Add User/AddUser";
+
 const Main = () => {
   return (
     <Routes>
@@ -16,6 +18,7 @@ const Main = () => {
       <Route exact path="/qna" element={<AddQuestion />}></Route>
       <Route exact path="/courses" element={<AllCourse />}></Route>
       <Route exact path="/courses/add" element={<AddCourse />}></Route>
+      <Route exact path="/users" element={<AddUser />}></Route>
     </Routes>
   );
 };

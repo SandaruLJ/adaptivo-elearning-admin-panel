@@ -170,5 +170,26 @@ export default function validateInfo(values) {
     }
   }
 
+  //  //Validate Question No
+  //  if (values.hasOwnProperty("no")) {
+  //   if (!values.no.trim()) {
+  //     errors.no = "Please enter the Question Number";
+  //   }
+  // }
+
+   //Validate Question
+   if (values.hasOwnProperty("question")) {
+    if (!values.question.trim()) {
+      errors.question = "Please enter a Question";
+    }
+  }
+
+  //Validate Question No
+  if (values.hasOwnProperty("answer")) {
+    if (!values.no.trim()) {
+      errors.no = "Please enter the Answer";
+    }
+  }
+
   return errors;
 }

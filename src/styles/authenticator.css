@@ -1,0 +1,78 @@
+:root {
+    --primary: #ff9735;
+    --primary-hover: #df7d21;
+    --background-color: #ffffffe5;
+}
+
+.amplify-button[data-variation='primary'] {
+    background: linear-gradient(95.06deg, #ff9e43 0%, #ffd25a 107.76%);
+    color: white;
+}
+
+.amplify-button[data-variation='primary']:hover,.amplify-button[data-variation='primary']:focus {
+    background: #ff9e43;
+}
+
+.amplify-button[data-variation='primary']:active {
+    background: #fc8d25;
+}
+
+.amplify-button:hover,.amplify-button:active,.amplify-button:focus {
+    background: #ff9e438a;
+    border-color: #a85d16;
+    color: #a85d16;
+}
+
+.amplify-button[data-variation='link'] {
+    color: var(--primary);
+}
+
+.amplify-button[data-variation='link']:hover {
+    background: #ff9e432f;
+    color: var(--primary-hover);
+}
+
+.amplify-tabs-item[data-state='active'] {
+    color: var(--primary);
+    border-color: var(--primary-hover);
+}
+
+.amplify-tabs-item[data-state='active']:hover {
+    color: var(--primary-hover);
+}
+
+.amplify-tabs-item:hover {
+    color: var(--primary-hover);
+}
+
+[data-amplify-authenticator] {
+    max-width: none;
+    background-image: url('../assets/background.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+[data-amplify-authenticator] [data-amplify-router] {
+    border-end-start-radius: 16px;
+    border-end-end-radius: 16px;
+    border: 0;
+    background: var(--background-color);
+}
+
+.auth-screen-logo {
+    background: var(--background-color);
+    font-family: "Billion Dreams", sans-serif;
+    font-size: 4em;
+    border-start-start-radius: 16px;
+    border-start-end-radius: 16px;
+}
+
+.auth-screen-logo-text {
+    color: var(--primary);
+}
+
+[data-amplify-authenticator] [data-amplify-container] {
+    align-self: center;
+    justify-self: start;
+    margin-inline-start: 10%;
+}

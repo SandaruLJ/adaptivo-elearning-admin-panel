@@ -10,8 +10,9 @@ const Main = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Dashboard />}></Route>
-      <Route exact path="/courses" element={<AllCourse />}></Route>
       <Route exact path="/courses/add" element={<AddCourse />}></Route>
+
+      <Route exact path="/courses" element={<AllCourse />}></Route>
     </Routes>
   );
 };

@@ -1,6 +1,7 @@
 import { Assignment } from "@mui/icons-material";
 import React, { useState } from "react";
 import Form from "../../components/Form/Form";
+import Select from "../../components/Select/SelectBox";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
 import { addCourse } from "../../service/course.service";
@@ -21,16 +22,54 @@ const breadcrumbs = [
   },
 ];
 
-const inputs = [
+const languages = [
   {
-    label: "First Name",
-    type: "text",
-    name: "fname",
+    value: "english",
+    label: "English",
   },
   {
-    label: "Last Name",
+    value: "sinhala",
+    label: "Sinhala",
+  },
+  {
+    value: "tamil",
+    label: "Tamil",
+  },
+];
+
+const inputs = [
+  {
+    label: "Title",
     type: "text",
-    name: "lname",
+    name: "title",
+    placeholder: "Your Course Title",
+  },
+  {
+    label: "Sub Title",
+    type: "text",
+    name: "subtitle",
+    placeholder: "Your Course Subtitle",
+  },
+  {
+    label: "Course Category",
+    type: "text",
+    name: "category",
+    placeholder: "Select a Category",
+    singleColumn: true,
+  },
+  {
+    label: "Sub Category",
+    type: "text",
+    name: "subcategory",
+    placeholder: "Select a Sub Category",
+    singleColumn: true,
+  },
+  {
+    label: "Course Language",
+    type: "select",
+    name: "language",
+    placeholder: "Select a Course Language",
+    values: languages,
   },
 ];
 

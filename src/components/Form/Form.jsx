@@ -4,6 +4,7 @@ import CustomButton from "../Button/CustomButton";
 import Input from "../Input/Input";
 import useForm from "../useForm";
 import validate from "../../helpers/validateInfo";
+import Select from "../Select/SelectBox";
 
 function Form(props) {
   const inputs = props.inputs;
@@ -33,24 +34,46 @@ function Form(props) {
           {
             //Map input array to input components
             inputs.map((input) => {
-              return (
-                <Grid item xs={12} md={singleColumn ? 12 : 6} key={input.name} hidden={input.hidden}>
-                  <Input
-                    label={input.label}
-                    value={values[input.name]}
-                    id={input.name}
-                    type={input.type}
-                    name={input.name}
-                    onChange={handleChange}
-                    placeholder={input.placeholder}
-                    error={errors[input.name] ? errors[input.name] : ""}
-                    maxLength={input.maxLength}
-                    disabled={input.disabled}
-                    hidden={input.hidden}
-                    hideLabel={false}
-                  />
-                </Grid>
-              );
+              if (input.type == "select") {
+                return (
+                  <Grid item xs={12} md={input.singleColumn ? 6 : 12} key={input.name} hidden={input.hidden}>
+                    <Select
+                      label={input.label}
+                      value={values[input.name]}
+                      id={input.name}
+                      type={input.type}
+                      name={input.name}
+                      onChange={handleChange}
+                      placeholder={input.placeholder}
+                      error={errors[input.name] ? errors[input.name] : ""}
+                      maxLength={input.maxLength}
+                      disabled={input.disabled}
+                      hidden={input.hidden}
+                      hideLabel={false}
+                      values={input.values}
+                    />
+                  </Grid>
+                );
+              } else {
+                return (
+                  <Grid item xs={12} md={input.singleColumn ? 6 : 12} key={input.name} hidden={input.hidden}>
+                    <Input
+                      label={input.label}
+                      value={values[input.name]}
+                      id={input.name}
+                      type={input.type}
+                      name={input.name}
+                      onChange={handleChange}
+                      placeholder={input.placeholder}
+                      error={errors[input.name] ? errors[input.name] : ""}
+                      maxLength={input.maxLength}
+                      disabled={input.disabled}
+                      hidden={input.hidden}
+                      hideLabel={false}
+                    />
+                  </Grid>
+                );
+              }
             })
           }
         </Grid>

@@ -1,0 +1,31 @@
+.select .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--orange);
+}
+.select .MuiSelect-root:focus .MuiOutlinedInput-notchedOutline {
+  border-color: var(--orange);
+}
+.select .MuiInputLabel-root {
+  font-weight: 600;
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+}
+.select .MuiInputLabel-root.error {
+  color: #d32f2f;
+}
+.error {
+  color: #d32f2f;
+  font-size: 14px;
+}
+.select .hidden {
+  display: none;
+}
+.select .MuiOutlinedInput-root {
+  width: 100%;
+}
+.select .not-selected .MuiSelect-select {
+  color: #bcbcbc;
+}
+.select .selected .MuiSelect-select {
+  color: #bcbcbc;
+}

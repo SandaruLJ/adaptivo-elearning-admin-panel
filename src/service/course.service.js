@@ -1,6 +1,6 @@
 import { getAll, save } from "./http.service";
 
-const url = `${process.env.REACT_APP_BE_URL}api/courses`;
+const url = `${process.env.REACT_APP_BE_URL}api/categories`;
 
 export const addCourse = async (data) => {
   const savedCourse = await save(url, data);

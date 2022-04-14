@@ -1,0 +1,34 @@
+.editor-wrapper {
+  margin-top: 15px;
+  border: 1px solid #c4c4c4;
+  height: 300px;
+  max-height: 500px;
+}
+.editor-wrapper.quiz {
+  height: 200px;
+}
+
+.editor-toolbar {
+  border-bottom: 1px solid #c4c4c4;
+}
+.editor {
+  height: 220px !important;
+  padding: 10px !important;
+  background-color: white;
+}
+.editor.quiz {
+  height: 120px !important;
+}
+.editor-wrapper.limited {
+  height: 100px;
+}
+.editor.limited {
+  height: 60px !important;
+}
+.editor .public-DraftEditor-content,
+.editor .DraftEditor-editorContainer {
+  height: unset;
+}
+.editor .public-DraftStyleDefault-block {
+  margin: unset;
+}

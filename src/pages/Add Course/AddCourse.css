@@ -4,3 +4,90 @@
 .MuiTab-root {
   min-height: 56px !important;
 }
+.thumbnail {
+  width: 150px;
+  border: 2px solid #777;
+}
+.mini-container-body {
+  margin-top: 10px;
+}
+.mini-description {
+  color: var(--text-grey);
+  font-weight: 500;
+  font-size: 14px;
+}
+.image-input {
+  display: none !important;
+}
+.orange.MuiButton-root {
+  background: linear-gradient(95.06deg, #ff9e43 0%, #ffd25a 107.76%);
+  color: white !important;
+  padding: 8px 20px;
+  margin-top: 10px;
+  text-transform: capitalize;
+}
+.orange.MuiButton-root:hover {
+  background: #ff9e43;
+}
+.hr {
+  height: 2px;
+  background: #c0c0c0;
+  border: none;
+  margin: 25px 0;
+}
+.sub-heading {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.add-new {
+  color: rgb(255, 123, 0);
+  cursor: pointer;
+}
+.section {
+  background-color: #f6f7fb;
+  padding: 20px;
+}
+.section-head {
+  cursor: pointer;
+}
+.section-body {
+  padding: 20px;
+}
+.sublesson-head {
+  padding: 15px;
+  cursor: pointer;
+}
+.sublesson {
+  background: white;
+}
+.sublesson-body {
+  padding: 20px;
+}
+.no-file {
+  border: 2px solid black;
+  padding: 10px;
+}
+.section .MuiInputLabel-root {
+  color: black;
+}
+.file-delete.MuiSvgIcon-root {
+  margin: 20px;
+  font-size: 30px;
+  color: darkred;
+}
+.answer-delete.MuiSvgIcon-root {
+  margin: 20px;
+  font-size: 30px;
+  color: #666;
+}
+.audio_preview {
+  width: 100%;
+}
+.add-answer {
+  color: #ff9e43;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 700;
+}

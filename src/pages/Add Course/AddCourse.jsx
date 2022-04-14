@@ -1,11 +1,18 @@
-import { Assignment } from "@mui/icons-material";
+import { Assignment, FileUpload, UploadFile } from "@mui/icons-material";
+import { Button, Grid, Input } from "@mui/material";
 import React, { useState } from "react";
+import CustomButton from "../../components/Button/CustomButton";
 import Form from "../../components/Form/Form";
 import Select from "../../components/Select/SelectBox";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
 import { addCourse } from "../../service/course.service";
 import "./AddCourse.css";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import CourseAdvancedInformation from "./components/CourseAdvancedInformation";
+import Curriculum from "./components/Curriculum";
+import AddConcept from "./components/Concept";
 
 const breadcrumbs = [
   {
@@ -34,6 +41,21 @@ const languages = [
   {
     value: "tamil",
     label: "Tamil",
+  },
+];
+
+const levels = [
+  {
+    value: "basic",
+    label: "Basic",
+  },
+  {
+    value: "intermediate",
+    label: "Intermediate",
+  },
+  {
+    value: "advanced",
+    label: "Advanced",
   },
 ];
 
@@ -70,9 +92,17 @@ const inputs = [
     name: "language",
     placeholder: "Select a Course Language",
     values: languages,
+    singleColumn: true,
+  },
+  {
+    label: "Level",
+    type: "select",
+    name: "level",
+    placeholder: "Select a level",
+    values: levels,
+    singleColumn: true,
   },
 ];
-
 const buttons = [
   {
     name: "Save ",
@@ -98,6 +128,7 @@ const AddCourse = () => {
   function cancel() {
     console.log("Cancel");
   }
+
   const tabs = [
     {
       label: "Basic Information",
@@ -107,14 +138,25 @@ const AddCourse = () => {
     {
       label: "Advanced Information",
       icon: <Assignment />,
-      body: <Form inputs={inputs} callback={submitForm} callbackCancel={cancel} btns={buttons} singleColumn={true} isLoading={isLoading} />,
+      body: <CourseAdvancedInformation />,
+    },
+    {
+      label: "Curriculum",
+      icon: <Assignment />,
+      body: <Curriculum />,
+    },
+    {
+      label: "Concept",
+      icon: <Assignment />,
+      body: <AddConcept />,
     },
   ];
+
   return (
-    <>
+    <div className="add-course">
       <TitleBar title="Create New Course" breadcrumbs={breadcrumbs} />
       <CustomTab tabs={tabs} />
-    </>
+    </div>
   );
 };
 export default AddCourse;

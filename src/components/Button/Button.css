@@ -20,3 +20,14 @@
   background: #808080;
   color: white;
 }
+.light-orange.MuiButton-root {
+  width: 100% !important;
+  padding: 10px !important;
+  background-color: #ffeee7 !important;
+  color: #fe825c;
+}
+.outlined.MuiButton-root {
+  border: 2px solid black;
+  padding: 10px;
+  color: black;
+}

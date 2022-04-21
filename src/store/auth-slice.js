@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: { user: {}, profile: {} },
-  reducers: {
+  reducers: { 
     setUser(state, actions) {
-      state.role = actions.payload;
+      state.user = actions.payload;
     },
     updateProfile(state, actions) {
       state.profile = actions.payload;

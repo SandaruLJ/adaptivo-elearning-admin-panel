@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function useForm(callback, validate, val) {
+function useForm(callback, validate, val, reduxDispatch, onChange) {
   //Hook to store states of values
   const [values, setValues] = useState({
     ...val,
@@ -14,6 +14,8 @@ function useForm(callback, validate, val) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
+    reduxDispatch(name, value);
+    onChange({ ...values, [name]: value });
   };
 
   const handleFileSubmit = ({ file }, name) => {

@@ -1,6 +1,9 @@
 .input .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
   border-color: var(--orange);
 }
+.input .MuiOutlinedInput-root {
+  background-color: white;
+}
 .input .MuiInputLabel-root {
   font-weight: 600;
   font-size: 20px;

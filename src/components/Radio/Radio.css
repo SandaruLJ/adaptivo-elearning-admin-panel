@@ -1,0 +1,23 @@
+.label {
+  font-weight: 600 !important;
+  font-size: 20px !important;
+  color: rgb(0, 0, 0) !important;
+  letter-spacing: 1px !important;
+}
+
+.input .MuiInputLabel-root.error {
+  color: #d32f2f;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 14px;
+}
+
+.input .hidden {
+  display: none;
+}
+
+.MuiButtonBase-root.MuiRadio-root.Mui-checked {
+  color: var(--orange);
+}

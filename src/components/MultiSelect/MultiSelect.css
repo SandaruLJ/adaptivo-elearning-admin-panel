@@ -1,0 +1,15 @@
+.MuiButtonBase-root.MuiMenuItem-root.Mui-selected {
+  background-color: rgba(254, 175, 73, 0.73);
+}
+.MuiButtonBase-root.MuiMenuItem-root.Mui-selected:hover {
+  background-color: rgb(254, 175, 73);
+}
+.select .MuiChip-root {
+  background-color: rgb(255 190 80);
+  padding: 15px;
+  color: white;
+}
+.select .MuiChip-root .MuiChip-label {
+  font-weight: 700;
+  font-size: 14px;
+}

@@ -1,5 +1,5 @@
-const save = (url, data) => {
-  fetch(url, {
+const save = async (url, data) => {
+  return await fetch(url, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -17,14 +17,14 @@ const getAll = async (url) => {
     .then((data) => data)
     .catch((err) => console.log(err));
 };
-const getById = (url, id) => {
-  fetch(url + `/${id}`)
+const getById = async (url, id) => {
+  return await fetch(url + `/${id}`)
     .then((res) => res.json())
     .then((data) => data)
     .catch((err) => console.log(err));
 };
-const update = (url, data) => {
-  fetch(url, {
+const update = async (url, data) => {
+  return await fetch(url, {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -36,8 +36,8 @@ const update = (url, data) => {
     .then((data) => data)
     .catch((err) => console.log(err));
 };
-const deleteById = (url, id) => {
-  fetch(url + `/${id}`, {
+const deleteById = async (url, id) => {
+  return await fetch(url + `/${id}`, {
     method: "DELETE",
   })
     .then((res) => res.json())

@@ -2,10 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const conceptSlice = createSlice({
   name: "concept",
-  initialState: { name: "", learningObjects: [] },
+  initialState: { name: "", preRequisites: [], learningObjects: [] },
   reducers: {
     setName(state, actions) {
       state.name = actions.payload;
+    },
+    setPrerequisites(state, actions) {
+      state.preRequisites = actions.payload;
     },
     addLO(state, actions) {
       const temp = state.learningObjects;
@@ -31,11 +34,14 @@ const conceptSlice = createSlice({
       state.learningObjects[actions.payload.loId - 1]["quiz"][actions.payload.id - 1] = actions.payload.question;
     },
     deleteQuestion(state, actions) {
-      //   const temp = state.questions.filter((question) => question.id !== actions.payload.id + 1);
-      console.log(actions.payload);
       const temp = state.learningObjects;
       temp[actions.payload.loId - 1]["quiz"].splice(actions.payload.id, 1);
       state.questions = temp;
+    },
+    resetState(state, actions) {
+      state.name = "";
+      state.preRequisites = [];
+      state.learningObjects = [];
     },
   },
 });

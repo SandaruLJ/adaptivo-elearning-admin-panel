@@ -20,7 +20,7 @@ const navLinks = [
       },
       {
         text: "Add Courses",
-        path: "/courses/add",
+        path: "/add/courses",
       },
     ],
     state: "isCourseClicked",

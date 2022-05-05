@@ -6,7 +6,7 @@
 }
 .thumbnail {
   width: 150px;
-  border: 2px solid #777;
+  /* border: 2px solid #777; */
 }
 .mini-container-body {
   margin-top: 10px;
@@ -19,16 +19,16 @@
 .image-input {
   display: none !important;
 }
-.orange.MuiButton-root {
+/* .orange.MuiButton-root {
   background: linear-gradient(95.06deg, #ff9e43 0%, #ffd25a 107.76%);
   color: white !important;
   padding: 8px 20px;
   margin-top: 10px;
   text-transform: capitalize;
-}
-.orange.MuiButton-root:hover {
+} */
+/* .orange.MuiButton-root:hover {
   background: #ff9e43;
-}
+} */
 .hr {
   height: 2px;
   background: #c0c0c0;
@@ -77,10 +77,15 @@
   font-size: 30px;
   color: darkred;
 }
+
 .answer-delete.MuiSvgIcon-root {
   margin: 20px;
   font-size: 30px;
   color: #666;
+}
+.thumbnail-delete.MuiSvgIcon-root {
+  font-size: 30px;
+  color: darkred;
 }
 .audio_preview {
   width: 100%;
@@ -90,4 +95,8 @@
   text-decoration: underline;
   cursor: pointer;
   font-weight: 700;
+}
+.video_preview {
+  width: 100%;
+  background-color: #111;
 }

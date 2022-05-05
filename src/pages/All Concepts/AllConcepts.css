@@ -1,0 +1,35 @@
+.concept-container {
+  padding: 20px;
+  background-color: #f5f8fa;
+  border-radius: 15px;
+  /* width: 200px; */
+  height: 120px;
+  position: relative;
+  border: 2px solid #999;
+  cursor: pointer;
+}
+.concept-container:hover {
+  transform: scale(1.1);
+}
+.concept-container .concept-name {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: 600;
+}
+.concept-delete {
+  position: absolute;
+  right: 15px;
+  color: black;
+}
+.add-concept-dialog .MuiPaper-root.MuiDialog-paper {
+  max-width: none;
+  width: 80%;
+}
+.add-concept-dialog .MuiDialogTitle-root {
+  background-color: #ffc353;
+  color: white;
+  margin-bottom: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}

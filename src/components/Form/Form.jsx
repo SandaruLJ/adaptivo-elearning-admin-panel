@@ -11,15 +11,22 @@ function Form(props) {
   const callback = props.callback;
   const callbackCancel = props.callbackCancel;
   const buttons = props.btns;
+  const reduxDispatch = props.reduxDispatch;
   const singleColumn = props.singleColumn;
+  const state = props.state;
+  const onChange = props.onChange;
   let names = {};
   props.inputs.map((input) => {
     const name = input.name;
-    names[input.name] = "";
+    if (state != null) {
+      names[input.name] = state[input.name];
+    } else {
+      names[input.name] = "";
+    }
   });
 
   //Import methods from useForm hook
-  const { handleChange, handleSubmit, values, errors } = useForm(callback, validate, names);
+  const { handleChange, handleSubmit, values, errors } = useForm(callback, validate, names, reduxDispatch, onChange);
 
   // Cancel button action
   const handleCancel = (event) => {
@@ -82,24 +89,26 @@ function Form(props) {
           {/* Buttons */}
           {
             // Render buttons in reverse order to counter the reversing applied due to 'float: right' style
-            <Grid container justifyContent={"space-between"}>
-              {buttons
-                .slice(0)
-                .reverse()
-                .map((btn) => {
-                  return (
-                    <CustomButton
-                      color={btn.color}
-                      loading={props.isLoading}
-                      name={btn.name}
-                      type={btn.type}
-                      key={btn.name}
-                      disabled={props.isLoading}
-                      onclick={btn.type === "cancel" ? handleCancel : () => {}}
-                    />
-                  );
-                })}
-            </Grid>
+            !props.hideSubmit && (
+              <Grid container justifyContent={"space-between"}>
+                {buttons
+                  .slice(0)
+                  .reverse()
+                  .map((btn) => {
+                    return (
+                      <CustomButton
+                        color={btn.color}
+                        loading={props.isLoading}
+                        name={btn.name}
+                        type={btn.type}
+                        key={btn.name}
+                        disabled={props.isLoading}
+                        onclick={btn.type === "cancel" ? handleCancel : () => {}}
+                      />
+                    );
+                  })}
+              </Grid>
+            )
           }
         </div>
       </form>

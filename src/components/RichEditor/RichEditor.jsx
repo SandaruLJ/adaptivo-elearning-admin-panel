@@ -15,6 +15,8 @@ const RichEditor = (props) => {
   const type = props.type;
 
   useEffect(() => {
+    console.log("Rich Editor");
+    console.log(props.content);
     if (props.content != undefined) {
       const blocksFromHtml = htmlToDraft(props.content);
       const { contentBlocks, entityMap } = blocksFromHtml;

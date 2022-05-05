@@ -4,26 +4,9 @@ import "./Select.css";
 
 const SelectBox = (props) => {
   const [selected, setSelected] = useState(false);
-  const currencies = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
+
   return (
-    <div class="select">
+    <div className="select">
       <InputLabel shrink htmlFor={props.id} className={`${props.error ? "error" : ""} ${props.hideLabel ? "hidden" : ""}`}>
         {props.label}
       </InputLabel>

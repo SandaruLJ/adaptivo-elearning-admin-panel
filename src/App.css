@@ -81,3 +81,6 @@ input[type="file"] {
 .main .MuiRadio-root.Mui-checked {
   color: #ff9c3f;
 }
+.pointer {
+  cursor: pointer;
+}

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./TopBar.css";
 import { Avatar, Divider, FormControl, Grid, IconButton, InputAdornment, ListItemIcon, Menu, MenuItem, OutlinedInput } from "@mui/material";
 import { ArrowDropDown, Fullscreen, FullscreenExit, Logout, Menu as MenuIcon, Search } from "@mui/icons-material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import store from '../../store';
+import { uiActions } from "../../store/ui-slice";
 
 //Admin TopBar
 const TopBar = (props) => {
@@ -11,15 +12,45 @@ const TopBar = (props) => {
   const role = state.auth.user.role;
   const name = `${state.auth.user.attributes.given_name} ${state.auth.user.attributes.family_name}`;
   const userInitials = `${state.auth.user.attributes.given_name[0]}${state.auth.user.attributes.family_name[0]}`;
+  const [fullscreen, setFullscreen] = useState(state.ui.fullscreen);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const toggleFullscreen = () => {
+    store.dispatch(uiActions.toggleFullscreen());
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!fullscreen) {
+        document.documentElement.requestFullscreen()
+          .catch(err => console.error(err));
+      } else {
+        document.exitFullscreen()
+          .catch(err => console.error(err));
+    }
+    };
+
+    const unsubscribeFullscreen = store.subscribe(handleFullscreenChange);
+
+    return function cleanup() {
+      unsubscribeFullscreen();
+    }
+  }, [fullscreen]);
+
+  // On fullscreen change, set the state accordingly
+  document.documentElement.onfullscreenchange = () => {
+    document.fullscreenElement ?
+        setFullscreen(true) : setFullscreen(false);
+  }
 
   return (
     <>
@@ -64,7 +95,9 @@ const TopBar = (props) => {
               </Grid>
 
               <Grid item>
-                <IconButton className="iconButton">{props.fullscreen ? <FullscreenExit /> : <Fullscreen />}</IconButton>
+                <IconButton className="iconButton" onClick={toggleFullscreen}>
+                  {fullscreen ? <FullscreenExit /> : <Fullscreen />}
+                </IconButton>
               </Grid>
 
               {/* Account button */}

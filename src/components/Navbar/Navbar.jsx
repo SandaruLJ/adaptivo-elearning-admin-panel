@@ -26,7 +26,24 @@ const navLinks = [
     state: "isCourseClicked",
     dispatchMethod: navMenuActions.clickCourses,
   },
-  { text: "Category", icon: <Category />, path: "/categories", auth: ["admin", "instructor"], state: "isCategoryClicked", dispatchMethod: navMenuActions.clickCategory },
+  {
+    text: "Category",
+    icon: <Category />,
+    path: "/categories",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Categories",
+        path: "/categories",
+      },
+      {
+        text: "Add Category",
+        path: "/categories/add",
+      },
+    ],
+    state: "isCategoryClicked",
+    dispatchMethod: navMenuActions.clickCategory,
+  },
   { text: "Instructors", icon: <Groups />, path: "/instructors", auth: ["admin", "instructor"], state: "isInstructorsClicked", dispatchMethod: navMenuActions.clickInstructors },
   { text: "Q & A", icon: <QuestionAnswer />, path: "/qna", auth: ["admin", "instructor"] },
   { text: "Users", icon: <Group />, path: "/users", auth: ["admin", "instructor"], state: "isUsersClicked" },
@@ -37,13 +54,14 @@ const NavBar = (props) => {
     <div className="navBar extended">
       {/* Logo */}
       <Grid container justify="center">
-        <Link
+        {/* <Link
           to="/"
           className={`logo 
                         ${props.collapsed ? "logoSmall" : "logoBig"}`}
         >
           Elearning
-        </Link>
+        </Link> */}
+        <img src="images/logo-white.png" className="logo-img" />
       </Grid>
       {/* Navigation Buttons */}
       <List component="nav">

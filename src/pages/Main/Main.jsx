@@ -18,6 +18,7 @@ const Main = () => {
       <Route exact path="/" element={<Dashboard />}></Route>
       <Route exact path="/add/courses" element={<AddCourse />}></Route>
       <Route exact path="/courses" element={<AllCourse />}></Route>
+      <Route exact path="/courses/edit" element={<AddCourse edit={true} />}></Route>
       <Route exact path="/qna" element={<AddQuestion />}></Route>
       <Route exact path="/users" element={<AddUser />}></Route>
       <Route exact path="/courses/add" element={<AddCourse />}></Route>

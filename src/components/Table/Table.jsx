@@ -10,7 +10,20 @@ const Table = (props) => {
   columns.push({ field: "no", headerName: "No", width: 100, headerAlign: "center", cellClassName: "table-cell" });
 
   props.columns.map((column) => {
-    columns.push({ field: column.field, headerName: column.name, width: 200, headerAlign: "center", cellClassName: "table-cell", flex: 1 });
+    if (column.type != "image") {
+      columns.push({ field: column.field, headerName: column.name, width: 200, headerAlign: "center", cellClassName: "table-cell", flex: 1 });
+    } else {
+      columns.push({
+        field: column.field,
+        headerName: column.name,
+        width: 200,
+        headerAlign: "center",
+        cellClassName: "table-cell",
+        renderCell: (params) => {
+          return <img src={params.row.thumbnail} className="table-image" />;
+        },
+      });
+    }
   });
   columns.push({
     field: "actions",

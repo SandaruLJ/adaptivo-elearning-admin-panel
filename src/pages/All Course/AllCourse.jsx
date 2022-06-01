@@ -26,12 +26,18 @@ const AllCourse = () => {
       rows.push({
         id: i + 1,
         no: i + 1,
+        thumbnail: course.thumbnail.url,
         title: course.title,
-        category: course.description,
+        category: course.category.title,
         status: "Active",
       });
     });
   const columns = [
+    {
+      field: "thumbnail",
+      name: "",
+      type: "image",
+    },
     {
       field: "title",
       name: "Title",

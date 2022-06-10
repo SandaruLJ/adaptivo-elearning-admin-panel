@@ -39,12 +39,16 @@ const types = [
   },
 ];
 const Unit = (props) => {
+  const errors = useSelector((state) => state.curriculum.errors);
+
   const [collapsed, setCollapsed] = useState(true);
   const [name, setName] = useState();
   const [type, setType] = useState();
   const [note, setNote] = useState();
   const [video, setVideo] = useState({});
   const [audio, setAudio] = useState({});
+  const [unitError, setUnitError] = useState(false);
+  const [errorKeys, setErrorKeys] = useState([]);
 
   const [quiz, setQuiz] = useState([]);
 
@@ -75,6 +79,19 @@ const Unit = (props) => {
       setNote(props.element.note);
     }
   }, []);
+
+  useEffect(() => {
+    setUnitError(false);
+    for (let key in errors) {
+      const ids = key.split("_");
+      setErrorKeys(ids);
+
+      if (ids[0] == props.sectionId + 1 && ids[1] == props.unitId + 1) {
+        setUnitError(true);
+        break;
+      }
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (props.element != null) {
@@ -162,7 +179,7 @@ const Unit = (props) => {
   return (
     <Draggable draggableId={`0${props.unitId}`} index={props.unitId}>
       {(provided) => (
-        <div className="sublesson mt-2" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+        <div className={`sublesson mt-2 ${unitError && "error-border"}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
           <div className="sublesson-head">
             <Grid container spacing={2} justifyContent="space-between">
               <Grid item onClick={toggleCollapse} xs={11}>
@@ -205,14 +222,38 @@ const Unit = (props) => {
           </div>
           {props.element && !props.element.isConceptLink && !collapsed && (
             <div className="sublesson-body">
-              <Input label="Unit Name" value={name} id={"name"} type="text" name="name" onChange={handleNameChange} placeholder="Please enter the unit name" hideLabel={false} />
+              <Input
+                label="Unit Name"
+                value={name}
+                id={"name"}
+                type="text"
+                name="name"
+                onChange={handleNameChange}
+                placeholder="Please enter the unit name"
+                hideLabel={false}
+                error={errors[`${props.sectionId + 1}_${props.unitId + 1}_name`]}
+              />
               <div className="mt-2">
-                <Select label="Unit Type" value={type} id="type" name="type" onChange={handleTypeChange} placeholder={"Select Unit type"} hideLabel={false} values={types} />
+                <Select
+                  label="Unit Type"
+                  value={type}
+                  id="type"
+                  name="type"
+                  onChange={handleTypeChange}
+                  placeholder={"Select Unit type"}
+                  hideLabel={false}
+                  values={types}
+                  error={errors[`${props.sectionId + 1}_${props.unitId + 1}_type`]}
+                />
               </div>
               <div className="mt-3">
-                {type == "video" && <VideoPicker setVideo={handleVideoUpload} video={video} deleteVideo={deleteVideo} />}
-                {type == "audio" && <AudioPicker setAudio={handleAudioUpload} audio={audio} deleteAudio={deleteAudio} />}
-                {type == "note" && <RichEditor callback={handleNoteChange} content={note} />}
+                {type == "video" && (
+                  <VideoPicker setVideo={handleVideoUpload} video={video} deleteVideo={deleteVideo} error={errorKeys[2] == "video" && errors[`${props.sectionId + 1}_${props.unitId + 1}_video`]} />
+                )}
+                {type == "audio" && (
+                  <AudioPicker setAudio={handleAudioUpload} audio={audio} deleteAudio={deleteAudio} error={errorKeys[2] == "audio" && errors[`${props.sectionId + 1}_${props.unitId + 1}_audio`]} />
+                )}
+                {type == "note" && <RichEditor callback={handleNoteChange} content={note} error={errorKeys[2] == "note" && errors[`${props.sectionId + 1}_${props.unitId + 1}_note`]} />}
                 {type == "quiz" && <QuizCurriculum quiz={props.element.quiz} sectionId={props.sectionId} unitId={props.unitId} />}
               </div>
             </div>

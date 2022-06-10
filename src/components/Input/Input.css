@@ -15,8 +15,12 @@
 }
 .error {
   color: #d32f2f;
-  font-size: 14px;
+  /* font-size: 14px; */
 }
 .input .hidden {
   display: none;
+}
+.input .MuiInputLabel-root.required:after {
+  content: " *";
+  color: #d32f2f;
 }

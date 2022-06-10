@@ -4,6 +4,7 @@ import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import React, { useState } from "react";
 import Input from "../Input/Input";
 import "./Table.css";
+import { Link } from "react-router-dom";
 
 const Table = (props) => {
   const columns = [];
@@ -32,7 +33,10 @@ const Table = (props) => {
     width: 200,
     headerAlign: "center",
     cellClassName: "table-cell",
-    getActions: (params) => [<GridActionsCellItem icon={<Edit />} label="Edit" showInMenu />, <GridActionsCellItem icon={<Delete />} label="Delete" showInMenu />],
+    getActions: (params) => [
+      <GridActionsCellItem icon={<Edit />} label="Edit" component={Link} to={`/courses/edit/${params.row.id}`} showInMenu />,
+      <GridActionsCellItem icon={<Delete />} label="Delete" showInMenu />,
+    ],
   });
   return (
     <div className="container" style={{ height: 500, width: "100%" }}>

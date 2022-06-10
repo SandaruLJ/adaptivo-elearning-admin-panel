@@ -1,6 +1,9 @@
 .MuiTab-root.Mui-selected {
   color: #ff9e43 !important;
 }
+.MuiTab-root.error {
+  color: #d32f2f !important;
+}
 .MuiTab-root {
   min-height: 56px !important;
 }
@@ -39,6 +42,10 @@
   font-weight: 600;
   font-size: 16px;
   color: #333;
+}
+.sub-heading.error {
+  font-weight: 600;
+  font-size: 16px;
 }
 
 .add-new {
@@ -99,4 +106,11 @@
 .video_preview {
   width: 100%;
   background-color: #111;
+}
+.progress {
+  text-align: center;
+  padding: 50px;
+}
+.error-border {
+  border: 3px solid #d32f2f;
 }

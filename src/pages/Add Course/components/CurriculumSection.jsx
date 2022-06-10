@@ -15,9 +15,23 @@ const CurriculumSection = (props) => {
   const [unitCount, setUnitCount] = useState([0]);
   const [concept, setConcept] = useState();
   const units = props.element ? props.element.units : [];
+  const errors = useSelector((state) => state.curriculum.errors);
+  const [sectionError, setSectionError] = useState(false);
 
   const [name, setName] = useState();
   const model = useRef();
+
+  useEffect(() => {
+    setSectionError(false);
+    for (let key in errors) {
+      const ids = key.split("_");
+
+      if (ids[0] == props.num) {
+        setSectionError(true);
+        break;
+      }
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (props.element == null) {
@@ -154,8 +168,8 @@ const CurriculumSection = (props) => {
   };
 
   return (
-    <div className="section mt-3">
-      <div className="section-head">
+    <div className={`section mt-3 ${sectionError && "error-border"}`}>
+      <div className="section-head ">
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item onClick={toggleCollapse} xs={11}>
             <Grid container spacing={2}>
@@ -177,7 +191,17 @@ const CurriculumSection = (props) => {
       </div>
       {!collapsed && (
         <div className="section-body">
-          <Input label="Section Name" value={name} id={"name"} type="text" name={"name"} onChange={handleChange} placeholder="Please enter the Section name" hideLabel={false} />
+          <Input
+            label="Section Name"
+            value={name}
+            id={"name"}
+            type="text"
+            name={"name"}
+            onChange={handleChange}
+            placeholder="Please enter the Section name"
+            hideLabel={false}
+            error={errors[`${props.num}_0_name`]}
+          />
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={`0${props.num - 1}`}>
               {(provided) => (

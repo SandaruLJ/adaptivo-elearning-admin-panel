@@ -2,11 +2,10 @@ import { Assignment, FileUpload, UploadFile } from "@mui/icons-material";
 import { Button, Grid, Input } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import CustomButton from "../../components/Button/CustomButton";
-import Form from "../../components/Form/Form";
 import Select from "../../components/Select/SelectBox";
 import CustomTab from "../../components/Tab/CustomTab";
 import TitleBar from "../../components/TitleBar/TitleBar";
-import { addCourse } from "../../service/course.service";
+import { addCourse, getCourseById } from "../../service/course.service";
 import "./AddCourse.css";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -15,10 +14,10 @@ import Curriculum from "./components/Curriculum";
 import AddConcept from "./components/Concept";
 import { useDispatch, useSelector } from "react-redux";
 import { courseActions } from "../../store/course-slice";
-import AllConcept from "../All Concepts/AllConcepts";
 import PublishCourse from "./components/PublishCourse";
-import { useFetch } from "../../components/useFetch";
-import { getAllCategory } from "../../service/category.service";
+import { useParams } from "react-router-dom";
+import { curriculumActions } from "../../store/curriculum-slice";
+import BasicInformation from "./components/BasicInformation";
 
 const breadcrumbs = [
   {
@@ -35,129 +34,122 @@ const breadcrumbs = [
   },
 ];
 
-const languages = [
-  {
-    value: "english",
-    label: "English",
-  },
-  {
-    value: "sinhala",
-    label: "Sinhala",
-  },
-  {
-    value: "tamil",
-    label: "Tamil",
-  },
-];
-
-const levels = [
-  {
-    value: "basic",
-    label: "Basic",
-  },
-  {
-    value: "intermediate",
-    label: "Intermediate",
-  },
-  {
-    value: "advanced",
-    label: "Advanced",
-  },
-];
-
-const buttons = [
-  {
-    name: "Next",
-    color: "orange",
-    type: "submit",
-  },
-  {
-    name: "Cancel",
-    color: "grey",
-    type: "cancel",
-  },
-];
-const categories = [];
-
-const AddCourse = () => {
+const AddCourse = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const tabRef = useRef();
   const course = useSelector((state) => state.course);
-  const { loading, data } = useFetch(getAllCategory);
+  const errors = useSelector((state) => state.course.errors);
+  const curriculumErrors = useSelector((state) => state.curriculum.errors);
 
-  function submitForm(data) {
-    // setIsLoading(true);
-    // const response = addCourse(data);
-    // setIsLoading(false);
+  const { id } = useParams();
 
-    tabRef.current.setValue(1);
-  }
+  useEffect(async () => {
+    if (props.edit) {
+      setIsLoading(true);
+      let data = await getCourseById(id);
+      setIsLoading(false);
 
-  useEffect(() => {
-    data &&
-      data.map((category, i) => {
-        categories.push({
-          value: category._id,
-          label: category.title,
+      const course = {
+        title: data.title,
+        subtitle: data.subtitle,
+        category: data.category._id,
+        subCategory: data.subCategory._id,
+        language: data.language,
+        level: data.level,
+        thumbnail: {
+          name: data.thumbnail.name,
+          size: data.thumbnail.size,
+          url: data.thumbnail.url,
+        },
+        trailer: {
+          name: data.trailer.name,
+          size: data.trailer.size,
+          url: data.trailer.url,
+          duration: data.trailer.duration,
+        },
+        description: data.description,
+        outcomes: {
+          learn01: data.outcomes[0],
+          learn02: data.outcomes[1],
+          learn03: data.outcomes[2],
+          learn04: data.outcomes[3],
+        },
+        requirements: {
+          requirement01: data.requirements[0],
+          requirement02: data.requirements[1],
+          requirement03: data.requirements[2],
+          requirement04: data.requirements[3],
+        },
+        welcome: data.welcome,
+        congratulations: data.congratulations,
+        price: {
+          currency: data.currency,
+          type: data.tier,
+          value: data.price,
+        },
+        instructors: [],
+      };
+      let sections = [];
+      data.curriculum.map((curriculum, index) => {
+        const section = {
+          id: index,
+          name: curriculum.name,
+          units: [],
+        };
+        curriculum.units.map((unit) => {
+          const temp = {
+            type: unit.type,
+            video: "",
+            audio: "",
+            resources: [],
+            quiz: [],
+            note: "",
+            name: unit.name,
+            isConceptLink: unit.isConceptLink,
+          };
+          if (unit.type == "video") {
+            temp.video = {
+              name: unit.video.name,
+              size: unit.video.size,
+              url: unit.video.url,
+              duration: unit.video.duration,
+            };
+          }
+          if (unit.type == "audio") {
+            temp.video = {
+              name: unit.audio.name,
+              size: unit.audio.size,
+              url: unit.audio.url,
+              duration: unit.audio.duration,
+            };
+          }
+          if (unit.type == "note") {
+            temp.note = unit.note;
+          }
+          if (unit.type == "quiz") {
+            unit.quiz.map((quiz, index) => {
+              const question = {
+                id: index,
+                title: quiz.question,
+                correctAnswer: quiz.correctAnswer,
+                explanation: quiz.explanation,
+                answers: quiz.answers,
+              };
+              temp.quiz.push(question);
+            });
+          }
+          section.units.push(temp);
         });
+        sections.push(section);
       });
-  }, [data]);
+      for (var key in course) {
+        dispatch(courseActions.setValue({ key: key, value: course[key] }));
+      }
+      dispatch(curriculumActions.setSection(sections));
+    }
+  }, []);
 
-  const inputs = [
-    {
-      label: "Title",
-      type: "text",
-      name: "title",
-      placeholder: "Your Course Title",
-    },
-    {
-      label: "Sub Title",
-      type: "text",
-      name: "subtitle",
-      placeholder: "Your Course Subtitle",
-    },
-    {
-      label: "Course Category",
-      type: "select",
-      name: "category",
-      placeholder: "Select a Category",
-      singleColumn: true,
-      values: categories,
-    },
-    {
-      label: "Sub Category",
-      type: "select",
-      name: "subCategory",
-      placeholder: "Select a Sub Category",
-      singleColumn: true,
-      values: categories,
-    },
-    {
-      label: "Course Language",
-      type: "select",
-      name: "language",
-      placeholder: "Select a Course Language",
-      values: languages,
-      singleColumn: true,
-    },
-    {
-      label: "Level",
-      type: "select",
-      name: "level",
-      placeholder: "Select a level",
-      values: levels,
-      singleColumn: true,
-    },
-  ];
-  function cancel() {
-    console.log("Cancel");
-  }
-
-  function setBasicValues(key, value) {
-    dispatch(courseActions.setValue({ key: key, value: value }));
-    console.log("In Basic Value");
-  }
   const handleTabChange = (value) => {
     tabRef.current.setValue(value);
   };
@@ -165,29 +157,26 @@ const AddCourse = () => {
     {
       label: "Basic Information",
       icon: <Assignment />,
-      body: <Form inputs={inputs} callback={submitForm} callbackCancel={cancel} btns={buttons} singleColumn={true} isLoading={isLoading} reduxDispatch={setBasicValues} state={course} />,
+      body: <BasicInformation changeTab={handleTabChange} isLoading={isLoading} />,
+      error: Object.keys(errors.basic).length > 0 ? true : false,
     },
     {
       label: "Advanced Information",
       icon: <Assignment />,
       body: <CourseAdvancedInformation changeTab={handleTabChange} />,
+      error: Object.keys(errors.advanced).length > 0 ? true : false,
     },
     {
       label: "Curriculum",
       icon: <Assignment />,
       body: <Curriculum changeTab={handleTabChange} />,
+      error: Object.keys(curriculumErrors).length > 0 ? true : false,
     },
     {
       label: "Publish Course",
       icon: <Assignment />,
-      // body: <AddConcept />,
       body: <PublishCourse changeTab={handleTabChange} />,
-    },
-    {
-      label: "Concept",
-      icon: <Assignment />,
-      // body: <AddConcept />,
-      body: <AllConcept />,
+      error: Object.keys(errors.publish).length > 0 ? true : false,
     },
   ];
 

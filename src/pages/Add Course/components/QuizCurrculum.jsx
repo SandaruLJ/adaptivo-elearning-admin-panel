@@ -62,6 +62,8 @@ const QuizCurriculum = (props) => {
               deleteQuestion(elem, index);
             }}
             handleQuizChange={handleQuizChange}
+            sectionId={props.sectionId}
+            unitId={props.unitId}
           />
         ))}
         <CustomButton name="+ Add Question" color="light-orange" onclick={() => addQuestion()} />

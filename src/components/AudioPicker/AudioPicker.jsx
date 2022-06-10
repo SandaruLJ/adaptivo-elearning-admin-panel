@@ -97,17 +97,18 @@ const AudioPicker = (props) => {
 
         <Grid container alignItems="center">
           <Grid item xs={10}>
-            <div className="no-file">{source ? fileName : "No file selected"}</div>
+            <div className={`no-file ${props.error && "error-border"}`}>{source ? fileName : "No file selected"}</div>
           </Grid>
           <Grid item xs={2}>
-            <Button className="outlined" component="span" endIcon={<FileUpload />}>
+            <Button className={`outlined ${props.error && "error-border"}`} component="span" endIcon={<FileUpload />}>
               Upload Audio
             </Button>
           </Grid>
         </Grid>
       </label>
       <caption className="text-left mt-1">
-        <strong>Note: </strong>All files should be atleast 720p and less than 4gb
+        <strong>Note: </strong>All files should be in the mp3 format
+        <p className="error">{props.error}</p>
       </caption>
       {source && (
         <Grid container justifyContent="space-between" className="mt-2" alignItems="center">

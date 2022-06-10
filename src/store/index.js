@@ -15,6 +15,7 @@ const store = configureStore({
     curriculum: curriculumSlice.reducer,
     course: courseSlice.reducer,
   },
+  devTools: true,
 });
 
 export default store;

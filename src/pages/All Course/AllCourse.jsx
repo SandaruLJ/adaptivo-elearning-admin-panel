@@ -24,7 +24,7 @@ const AllCourse = () => {
   data &&
     data.map((course, i) => {
       rows.push({
-        id: i + 1,
+        id: course._id,
         no: i + 1,
         thumbnail: course.thumbnail.url,
         title: course.title,

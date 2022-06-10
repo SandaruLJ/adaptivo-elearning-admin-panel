@@ -7,6 +7,8 @@ import RichEditor from "../../../components/RichEditor/RichEditor";
 import Select from "../../../components/Select/SelectBox";
 import { addCourse } from "../../../service/course.service";
 import { courseActions } from "../../../store/course-slice";
+import validate from "../../../helpers/validateInfo";
+import { curriculumActions } from "../../../store/curriculum-slice";
 
 const types = [
   {
@@ -60,9 +62,9 @@ const PublishCourse = (props) => {
   const dispatch = useDispatch();
   const course = useSelector((state) => state.course);
   const curriculum = useSelector((state) => state.curriculum);
-
   const [message, setMessage] = useState({});
   const [instructors, setInstructors] = useState();
+  const errors = useSelector((state) => state.course.errors.publish);
 
   useEffect(() => {
     setMessage({ welcome: course.welcome, congratulations: course.congratulations });
@@ -85,7 +87,6 @@ const PublishCourse = (props) => {
     // if (e.target.value == "paid" && !course.price.currency) {
     //   dispatch(courseActions.setValue({ key: "price", value: { ...course.price, currency: "rs" } }));
     // }
-    console.log(course);
   };
   const handlePriceChange = (e) => {
     dispatch(courseActions.setValue({ key: "price", value: { ...course.price, value: e.target.value } }));
@@ -93,25 +94,70 @@ const PublishCourse = (props) => {
   const handleCurrencyChange = (e) => {
     dispatch(courseActions.setValue({ key: "price", value: { ...course.price, currency: e.target.value } }));
   };
+
+  const validatePublishCourse = () => {
+    // const values = {
+    //   tier: course.price.type,
+    //   currency: course.price.currency,
+    //   amount: course.price.value,
+    //   congratulations: course.congratulations,
+    //   welcome: course.welcome,
+    // };
+    // console.log(values);
+    // console.log(validate(values));
+    // setErrors(validate(values));
+  };
   const handleSubmit = () => {
-    let request = { ...course, curriculum: curriculum };
-    addCourse(request);
+    dispatch(courseActions.setErrors());
+    dispatch(curriculumActions.setErrors());
+
+    // validatePublishCourse();
+    // let request = { ...course, curriculum: curriculum };
+    // addCourse(request);
   };
   return (
     <div>
       <h2 className="mb-3">Course Pricing</h2>
       <Grid container spacing={6}>
         <Grid item md={6}>
-          <Select label="Price Tier" value={course.price.type} id="tier" name="tier" onChange={handleTierChange} placeholder={"Select Price Tier"} hideLabel={false} values={priceTier} />
+          <Select
+            label="Price Tier"
+            value={course.price.type}
+            error={errors.tier ? errors.tier : ""}
+            id="tier"
+            name="tier"
+            onChange={handleTierChange}
+            placeholder={"Select Price Tier"}
+            hideLabel={false}
+            values={priceTier}
+          />
         </Grid>
         {course.price.type == "paid" && (
           <Grid item md={6}>
             <Grid container alignItems="flex-end">
               <Grid item xs={2}>
-                <Select label="Price(Rs.)" value={course.price.currency} id="currency" name="currency" onChange={handleCurrencyChange} hideLabel={false} values={currencies} />
+                <Select
+                  label="Price"
+                  value={course.price.currency}
+                  error={errors.currency ? errors.currency : ""}
+                  id="currency"
+                  name="currency"
+                  onChange={handleCurrencyChange}
+                  hideLabel={false}
+                  values={currencies}
+                />
               </Grid>
               <Grid item xs={10}>
-                <Input value={course.price.value} id="price" type="text" name={"price"} onChange={handlePriceChange} placeholder="Please enter the price" hideLabel={true} />
+                <Input
+                  value={course.price.value}
+                  id="price"
+                  type="text"
+                  error={errors.amount ? errors.amount : ""}
+                  name={"price"}
+                  onChange={handlePriceChange}
+                  placeholder="Please enter the price"
+                  hideLabel={true}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -129,6 +175,7 @@ const PublishCourse = (props) => {
               handleMessageChange("welcome", value);
             }}
             content={course.welcome}
+            error={errors.welcome}
           />
         </Grid>
         <Grid item md={6}>
@@ -140,6 +187,7 @@ const PublishCourse = (props) => {
               handleMessageChange("congratulations", value);
             }}
             content={course.congratulations}
+            error={errors.congratulations}
           />
         </Grid>
       </Grid>

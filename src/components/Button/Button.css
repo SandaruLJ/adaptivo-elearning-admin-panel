@@ -32,3 +32,6 @@
   color: black;
   width: 100%;
 }
+.error-border.MuiButton-root {
+  border: 3px solid #d32f2f;
+}

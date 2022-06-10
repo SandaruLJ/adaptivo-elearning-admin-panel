@@ -12,13 +12,15 @@ import AllUsers from "../All Users/AllUsers";
 
 import AddCategory from "../Add Category/AddCategory";
 import AllCategory from "../AllCategory/AllCategory";
+import AllConcept from "../All Concepts/AllConcepts";
+
 const Main = () => {
   return (
     <Routes>
       <Route exact path="/" element={<Dashboard />}></Route>
       <Route exact path="/add/courses" element={<AddCourse />}></Route>
       <Route exact path="/courses" element={<AllCourse />}></Route>
-      <Route exact path="/courses/edit" element={<AddCourse edit={true} />}></Route>
+      <Route path="/courses/edit/:id" element={<AddCourse edit={true} />}></Route>
       <Route exact path="/qna" element={<AddQuestion />}></Route>
       <Route exact path="/users" element={<AddUser />}></Route>
       <Route exact path="/courses/add" element={<AddCourse />}></Route>
@@ -26,6 +28,7 @@ const Main = () => {
       <Route exact path="/users/add" element={<AddUser />}></Route>
       <Route exact path="/categories/add" element={<AddCategory />}></Route>
       <Route exact path="/categories" element={<AllCategory />}></Route>
+      <Route exact path="/concepts" element={<AllConcept />}></Route>
     </Routes>
   );
 };

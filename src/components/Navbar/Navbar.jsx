@@ -26,6 +26,7 @@ const navLinks = [
     state: "isCourseClicked",
     dispatchMethod: navMenuActions.clickCourses,
   },
+  { text: "Concepts", icon: <MenuBook />, path: "/concepts", auth: ["admin", "instructor"] },
   {
     text: "Category",
     icon: <Category />,

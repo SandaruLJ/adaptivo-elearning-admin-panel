@@ -21,7 +21,6 @@ const Main = () => {
       <Route exact path="/add/courses" element={<AddCourse />}></Route>
       <Route exact path="/courses" element={<AllCourse />}></Route>
       <Route exact path="/qna" element={<AddQuestion />}></Route>
-      <Route exact path="/users" element={<AddUser />}></Route>
       <Route exact path="/courses/add" element={<AddCourse />}></Route>
       <Route exact path="/users" element={<AllUsers />}></Route>
       <Route exact path="/users/add" element={<AddUser />}></Route>

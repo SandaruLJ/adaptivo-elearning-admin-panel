@@ -27,9 +27,42 @@ const navLinks = [
     dispatchMethod: navMenuActions.clickCourses,
   },
   { text: "Category", icon: <Category />, path: "/categories", auth: ["admin", "instructor"], state: "isCategoryClicked", dispatchMethod: navMenuActions.clickCategory },
-  { text: "Instructors", icon: <Groups />, path: "/instructors", auth: ["admin", "instructor"], state: "isInstructorsClicked", dispatchMethod: navMenuActions.clickInstructors },
+  {
+    text: "Instructors",
+    icon: <Groups />,
+    path: "/instructors",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Instructors",
+        path: "/instructors"
+      },
+      {
+        text: "Add Instructors",
+        path: "/instructors/add"
+      }
+    ],
+    state: "isInstructorsClicked",
+    dispatchMethod: navMenuActions.clickInstructors
+  },
   { text: "Q & A", icon: <QuestionAnswer />, path: "/qna", auth: ["admin", "instructor"] },
-  { text: "Users", icon: <Group />, path: "/users", auth: ["admin", "instructor"], state: "isUsersClicked" },
+  { text: "Users",
+    icon: <Group />,
+    path: "/users",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Users",
+        path: "/users"
+      },
+      {
+        text: "Add Users",
+        path: "/users/add"
+      }
+    ],
+    state: "isUsersClicked",
+    dispatchMethod: navMenuActions.clickUsers
+  },
   { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"], state: "isSubscriptionsClicked" },
 ];
 const NavBar = (props) => {

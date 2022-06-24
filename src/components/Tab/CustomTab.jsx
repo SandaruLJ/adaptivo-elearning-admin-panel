@@ -1,5 +1,5 @@
 import { AppBar, Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import SwipeableViews from "react-swipeable-views";
 
 function TabPanel(props) {
@@ -23,13 +23,18 @@ function a11yProps(index) {
   };
 }
 
-const CustomTab = (props) => {
+const CustomTab = forwardRef((props, ref) => {
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  useImperativeHandle(ref, () => ({
+    setValue(value) {
+      setValue(value);
+    },
+  }));
 
   const handleChangeIndex = (index) => {
     setValue(index);
@@ -55,5 +60,5 @@ const CustomTab = (props) => {
       </SwipeableViews>
     </Box>
   );
-};
+});
 export default CustomTab;

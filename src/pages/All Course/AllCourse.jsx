@@ -25,7 +25,7 @@ const AllCourse = () => {
     data.map((course, i) => {
       rows.push({
         id: i + 1,
-        no: "1",
+        no: i + 1,
         title: course.title,
         category: course.description,
         status: "Active",

@@ -41,6 +41,10 @@
   transition: ease-in;
   transition-duration: 250ms;
 }
+.iconRoot-collapsed {
+  padding-inline-start: 0px;
+  padding-inline-end: 0px;
+}
 .textPrimary .MuiListItemIcon-root {
   font-weight: 500;
   color: white;

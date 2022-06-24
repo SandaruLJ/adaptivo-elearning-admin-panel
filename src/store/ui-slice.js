@@ -7,9 +7,12 @@ const uiSlice = createSlice({
     toggleFullscreen(state) {
       state.fullscreen = !state.fullscreen;
     },
+    setFullscreen(state, actions) {
+      state.fullscreen = actions.payload;
+    },
     toggleCollapsed(state) {
       state.collapsed = !state.collapsed;
-    }
+    },
   }
 });
 

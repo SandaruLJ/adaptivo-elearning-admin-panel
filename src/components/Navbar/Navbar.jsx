@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 
 import { Category, Dashboard, Group, Groups, MenuBook, QuestionAnswer, Subscriptions } from "@mui/icons-material";
 import { Grid, Link, List } from "@mui/material";
 import NavButton from "../NavButton/NavButton";
 import { navMenuActions } from "../../store/navmenu-slice";
+import store from "../../store";
 
 const navLinks = [
   { text: "Dashboard", icon: <Dashboard />, path: "/", auth: ["admin", "instructor"] },
@@ -33,14 +34,29 @@ const navLinks = [
   { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"], state: "isSubscriptionsClicked" },
 ];
 const NavBar = (props) => {
+  const state = store.getState();
+  const [collapsed, setCollapsed] = useState(state.ui.collapsed);
+
+  useEffect(() => {
+    const handleCollapsedChange = () => {
+      setCollapsed(store.getState().ui.collapsed);
+    }
+
+    const unsubscribeCollapsed = store.subscribe(handleCollapsedChange);
+
+    return function cleanup() {
+      unsubscribeCollapsed();
+    }
+  }, [])
+
   return (
-    <div className="navBar extended">
+    <div className={`navBar ${collapsed ? 'collapsed': 'extended'}`}>
       {/* Logo */}
       <Grid container justify="center">
         <Link
           to="/"
           className={`logo 
-                        ${props.collapsed ? "logoSmall" : "logoBig"}`}
+                        ${collapsed ? "logoSmall" : "logoBig"}`}
         >
           Elearning
         </Link>
@@ -55,7 +71,7 @@ const NavBar = (props) => {
             text={navLink.text}
             icon={navLink.icon}
             path={navLink.path}
-            collapsed={props.collapsed}
+            collapsed={collapsed}
             subLinks={navLink.subLinks}
             state={navLink.state}
             dispatchMethod={navLink.dispatchMethod}

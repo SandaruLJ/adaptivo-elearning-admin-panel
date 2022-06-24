@@ -20,6 +20,10 @@
   transition: ease-in;
   transition-delay: 0ms;
 }
+.extended-main {
+  padding-left: 72px;
+  transition-delay: 250ms;
+}
 strong {
   font-weight: 600;
   color: #333;

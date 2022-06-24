@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
@@ -17,6 +17,20 @@ import { authActions } from './store/auth-slice';
 Amplify.configure(awsExports);
 
 function App() {
+  const [collapsed, setCollapsed] = useState(store.getState().ui.collapsed);
+
+  useEffect(() => {
+    const handleCollapsedChange = () => {
+      setCollapsed(store.getState().ui.collapsed);
+    }
+
+    const unsubscribeCollapsed = store.subscribe(handleCollapsedChange);
+
+    return () => {
+      unsubscribeCollapsed();
+    }
+  })
+
   const customAuthComponents = {
     Header() {
       const { tokens } = useTheme();
@@ -46,7 +60,7 @@ function App() {
               <Router>
                 <NavBar />
                 <TopBar signOut={signOut} />
-                <div className="main">
+                <div className={`main ${collapsed && 'extended-main'}`}>
                   <Main />
                 </div>
               </Router>

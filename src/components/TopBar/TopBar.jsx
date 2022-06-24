@@ -13,6 +13,7 @@ const TopBar = (props) => {
   const name = `${state.auth.user.attributes.given_name} ${state.auth.user.attributes.family_name}`;
   const userInitials = `${state.auth.user.attributes.given_name[0]}${state.auth.user.attributes.family_name[0]}`;
   const [fullscreen, setFullscreen] = useState(state.ui.fullscreen);
+  const [collapsed, setCollapsed] = useState(state.ui.collapsed);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -28,28 +29,48 @@ const TopBar = (props) => {
     store.dispatch(uiActions.toggleFullscreen());
   }
 
+  const toggleCollapsed = () => {
+    store.dispatch(uiActions.toggleCollapsed());
+  }
+
   useEffect(() => {
     const handleFullscreenChange = () => {
-      if (!fullscreen) {
-        document.documentElement.requestFullscreen()
-          .catch(err => console.error(err));
-      } else {
-        document.exitFullscreen()
-          .catch(err => console.error(err));
-    }
+      let previous = fullscreen;
+      let current = store.getState().ui.fullscreen;
+
+      if (previous !== current) {
+        if (!fullscreen) {
+          document.documentElement.requestFullscreen()
+            .catch(err => console.error(err));
+        } else {
+          document.exitFullscreen()
+            .catch(err => console.error(err));
+        }
+      }
     };
 
+    const handleCollapsedChange = () => {
+      setCollapsed(store.getState().ui.collapsed);
+    }
+
     const unsubscribeFullscreen = store.subscribe(handleFullscreenChange);
+    const unsubscribeCollapsed = store.subscribe(handleCollapsedChange);
 
     return function cleanup() {
       unsubscribeFullscreen();
+      unsubscribeCollapsed();
     }
   }, [fullscreen]);
 
   // On fullscreen change, set the state accordingly
   document.documentElement.onfullscreenchange = () => {
-    document.fullscreenElement ?
-        setFullscreen(true) : setFullscreen(false);
+    if (document.fullscreenElement) {
+      setFullscreen(true);
+      store.dispatch(uiActions.setFullscreen(true));
+    } else {
+      setFullscreen(false);
+      store.dispatch(uiActions.setFullscreen(false));
+    };
   }
 
   return (
@@ -64,7 +85,7 @@ const TopBar = (props) => {
           <Grid item>
             <Grid container alignItems="center" spacing={2}>
               <Grid item>
-                <IconButton className="iconButton">
+                <IconButton className="iconButton" onClick={toggleCollapsed}>
                   <MenuIcon />
                 </IconButton>
               </Grid>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import "./NavButton.css";
@@ -7,10 +7,9 @@ import { navMenuActions } from "../../store/navmenu-slice";
 
 const NavButton = (props) => {
   console.log(props.state);
-  const [collapse, setCollapse] = useState(true);
   const state = useSelector((state) => state.navMenu[props.state]);
   const dispatch = useDispatch();
-  console.log(state);
+  
   return (
     <div>
       <ListItem
@@ -24,7 +23,7 @@ const NavButton = (props) => {
           dispatch(props.dispatchMethod());
         }} // Classname when the link is active
       >
-        <ListItemIcon className={"iconRoot"}>{props.icon}</ListItemIcon>
+        <ListItemIcon className={`${props.collapsed ? "iconRoot-collapsed": "iconRoot"}`}>{props.icon}</ListItemIcon>
         <ListItemText className={"textPrimary"} primary={props.text} />
       </ListItem>
       {props.subLinks &&

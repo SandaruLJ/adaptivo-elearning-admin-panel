@@ -1,3 +1,9 @@
 .dialog .MuiPaper-root.MuiDialog-paper {
   min-width: 450px !important;
 }
+.dialog .MuiDialogTitle-root {
+  background: var(--gradient);
+  color: white;
+  margin-bottom: 15px;
+  padding: 10px 24px;
+}

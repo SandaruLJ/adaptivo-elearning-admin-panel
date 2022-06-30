@@ -69,18 +69,8 @@ const AddCourse = (props) => {
           duration: data.trailer.duration,
         },
         description: data.description,
-        outcomes: {
-          learn01: data.outcomes[0],
-          learn02: data.outcomes[1],
-          learn03: data.outcomes[2],
-          learn04: data.outcomes[3],
-        },
-        requirements: {
-          requirement01: data.requirements[0],
-          requirement02: data.requirements[1],
-          requirement03: data.requirements[2],
-          requirement04: data.requirements[3],
-        },
+        outcomes: {},
+        requirements: {},
         welcome: data.welcome,
         congratulations: data.congratulations,
         price: {
@@ -90,6 +80,12 @@ const AddCourse = (props) => {
         },
         instructors: [],
       };
+      data.outcomes.map((outcome, i) => {
+        course.outcomes[`learn${i + 1}`] = outcome;
+      });
+      data.requirements.map((requirement, i) => {
+        course.requirements[`requirement${i + 1}`] = requirement;
+      });
       let sections = [];
       data.curriculum.map((curriculum, index) => {
         const section = {
@@ -182,7 +178,7 @@ const AddCourse = (props) => {
 
   return (
     <div className="add-course">
-      <TitleBar title="Create New Course" breadcrumbs={breadcrumbs} />
+      <TitleBar title={props.edit ? "Edit Course" : "Create New Course"} breadcrumbs={breadcrumbs} />
       <CustomTab tabs={tabs} ref={tabRef} />
     </div>
   );

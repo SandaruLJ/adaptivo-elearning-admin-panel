@@ -1,7 +1,6 @@
 import { Delete, FileUpload } from "@mui/icons-material";
 import { Button, Grid, Input } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../../components/Button/CustomButton";
@@ -10,7 +9,6 @@ import LinearProgressWithLabel from "../../../components/LinearProgress/LinearPr
 import RichEditor from "../../../components/RichEditor/RichEditor";
 import { cancelThumbnailUpload, cancelTrailerUpload, uploadThumbnail, uploadTrailer } from "../../../service/course.service";
 import { courseActions } from "../../../store/course-slice";
-import validate from "../../../helpers/validateInfo";
 
 const buttons = [
   {

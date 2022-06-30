@@ -1,5 +1,5 @@
-import { Grid } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { DialogContentText, Grid } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../../components/Button/CustomButton";
 import Input from "../../../components/Input/Input";
@@ -9,6 +9,7 @@ import { addCourse } from "../../../service/course.service";
 import { courseActions } from "../../../store/course-slice";
 import validate from "../../../helpers/validateInfo";
 import { curriculumActions } from "../../../store/curriculum-slice";
+import DialogComponent from "../../../components/Dialog/DialogComponent";
 
 const types = [
   {
@@ -65,6 +66,10 @@ const PublishCourse = (props) => {
   const [message, setMessage] = useState({});
   const [instructors, setInstructors] = useState();
   const errors = useSelector((state) => state.course.errors.publish);
+  const courseErrors = useSelector((state) => state.course.errors);
+  const curriculumErrors = useSelector((state) => state.curriculum.errors);
+
+  const model = useRef();
 
   useEffect(() => {
     setMessage({ welcome: course.welcome, congratulations: course.congratulations });
@@ -108,6 +113,8 @@ const PublishCourse = (props) => {
     // setErrors(validate(values));
   };
   const handleSubmit = () => {
+    model.current.handleClickOpen();
+
     dispatch(courseActions.setErrors());
     dispatch(curriculumActions.setErrors());
 
@@ -215,6 +222,15 @@ const PublishCourse = (props) => {
           <CustomButton name="Submit for Review" color="orange" type="submit" onclick={handleSubmit} />
         </Grid>
       </Grid>
+      <DialogComponent
+        ref={model}
+        title={"Error !"}
+        body={
+          <>
+            <DialogContentText>Please fill the missing values</DialogContentText>
+          </>
+        }
+      />
     </div>
   );
 };

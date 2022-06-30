@@ -1,5 +1,5 @@
 import { Delete, Menu } from "@mui/icons-material";
-import { Grid } from "@mui/material";
+import { DialogContentText, Grid } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Input from "../../../components/Input/Input";
@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogComponent from "../../../components/Dialog/DialogComponent";
 import Unit from "./Unit";
 import { curriculumActions } from "../../../store/curriculum-slice";
+import SelectBox from "../../../components/Select/SelectBox";
+import LinkConceptDialog from "./LinkConceptDialog";
 
 const CurriculumSection = (props) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -19,7 +21,7 @@ const CurriculumSection = (props) => {
   const [sectionError, setSectionError] = useState(false);
 
   const [name, setName] = useState();
-  const model = useRef();
+  // const model = useRef();
 
   useEffect(() => {
     setSectionError(false);
@@ -219,14 +221,25 @@ const CurriculumSection = (props) => {
               <CustomButton name="Add Unit" color="light-orange" onclick={addUnit} />
             </Grid>
             <Grid item xs={6}>
-              <CustomButton
+              <LinkConceptDialog setValue={handleConceptChange} />
+              {/* <CustomButton
                 name="Link Concept"
                 color="light-orange"
                 onclick={() => {
                   model.current.handleClickOpen();
                 }}
               />
-              <DialogComponent ref={model} setValue={handleConceptChange} />
+              <DialogComponent
+                ref={model}
+                setValue={handleConceptChange}
+                title={"Select Concept"}
+                body={
+                  <>
+                    <DialogContentText>Please select a concept</DialogContentText>
+                    <SelectBox value={value} id="concept" name="concept" onChange={handleChange} placeholder={"Select a concept"} hideLabel={true} values={concepts} />
+                  </>
+                }
+              /> */}
             </Grid>
           </Grid>
         </div>

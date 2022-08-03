@@ -1,4 +1,4 @@
-import { getAll, save } from "./http.service";
+import { deleteById, getAll, getById, save } from "./http.service";
 import axios from "axios";
 
 const url = `${process.env.REACT_APP_BE_URL}api/courses`;
@@ -10,6 +10,15 @@ export const addCourse = async (data) => {
 export const getAllCourses = async () => {
   const courses = await getAll(url);
   return courses;
+};
+export const getCourseById = async (id) => {
+  const courses = await getById(url, id);
+  return courses;
+};
+
+export const deleteCourseById = async (id) => {
+  const deletedCourse = await deleteById(url, id);
+  return deletedCourse;
 };
 
 let thumbnailController = new AbortController();

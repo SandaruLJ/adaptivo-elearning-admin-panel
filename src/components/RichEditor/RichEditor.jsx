@@ -25,24 +25,30 @@ const RichEditor = (props) => {
     }
   }, []);
   return type === "limited" ? (
-    <Editor
-      editorState={editorState}
-      toolbarClassName="editor-toolbar"
-      wrapperClassName={`editor-wrapper limited ${props.style}`}
-      editorClassName={`editor limited ${props.style}`}
-      onEditorStateChange={onEditorStateChange}
-      toolbar={{
-        options: ["inline", "image", "history"],
-      }}
-    />
+    <>
+      <Editor
+        editorState={editorState}
+        toolbarClassName={`editor-toolbar ${props.error ? "error-richeditor" : ""}`}
+        wrapperClassName={`editor-wrapper limited ${props.style} ${props.error ? "error-richeditor" : ""}`}
+        editorClassName={`editor limited ${props.style}`}
+        onEditorStateChange={onEditorStateChange}
+        toolbar={{
+          options: ["inline", "image", "history"],
+        }}
+      />
+      <p className="error mt-1">{props.error}</p>
+    </>
   ) : (
-    <Editor
-      editorState={editorState}
-      toolbarClassName="editor-toolbar"
-      wrapperClassName={`editor-wrapper ${props.style}`}
-      editorClassName={`editor ${props.style}`}
-      onEditorStateChange={onEditorStateChange}
-    />
+    <>
+      <Editor
+        editorState={editorState}
+        toolbarClassName={`editor-toolbar ${props.error ? "error-richeditor" : ""}`}
+        wrapperClassName={`editor-wrapper ${props.style} ${props.error ? "error-richeditor" : ""}`}
+        editorClassName={`editor ${props.style}`}
+        onEditorStateChange={onEditorStateChange}
+      />
+      <p className="error mt-1">{props.error}</p>
+    </>
   );
 };
 export default RichEditor;

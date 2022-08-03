@@ -29,3 +29,7 @@
 .select .selected .MuiSelect-select {
   color: #bcbcbc;
 }
+.select .MuiInputLabel-root.required:after {
+  content: " *";
+  color: #d32f2f;
+}

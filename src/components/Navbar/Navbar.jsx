@@ -23,10 +23,24 @@ const navLinks = [
         path: "/add/courses",
       },
     ],
-    state: "isCourseClicked",
-    dispatchMethod: navMenuActions.clickCourses,
   },
-  { text: "Category", icon: <Category />, path: "/categories", auth: ["admin", "instructor"], state: "isCategoryClicked", dispatchMethod: navMenuActions.clickCategory },
+  { text: "Concepts", icon: <MenuBook />, path: "/concepts", auth: ["admin", "instructor"] },
+  {
+    text: "Categories",
+    icon: <Category />,
+    path: "/categories",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Categories",
+        path: "/categories",
+      },
+      {
+        text: "Add Category",
+        path: "/categories/add",
+      },
+    ],
+  },
   {
     text: "Instructors",
     icon: <Groups />,
@@ -35,64 +49,53 @@ const navLinks = [
     subLinks: [
       {
         text: "All Instructors",
-        path: "/instructors"
+        path: "/instructors",
       },
       {
         text: "Add Instructors",
-        path: "/instructors/add"
-      }
+        path: "/add/instructors",
+      },
     ],
-    state: "isInstructorsClicked",
-    dispatchMethod: navMenuActions.clickInstructors
   },
   { text: "Q & A", icon: <QuestionAnswer />, path: "/qna", auth: ["admin", "instructor"] },
-  { text: "Users",
+  {
+    text: "Users",
     icon: <Group />,
     path: "/users",
     auth: ["admin", "instructor"],
     subLinks: [
       {
         text: "All Users",
-        path: "/users"
+        path: "/users",
       },
       {
-        text: "Add Users",
-        path: "/users/add"
-      }
+        text: "Add User",
+        path: "/add/user",
+      },
     ],
-    state: "isUsersClicked",
-    dispatchMethod: navMenuActions.clickUsers
   },
-  { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"], state: "isSubscriptionsClicked" },
+  { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"] },
 ];
 const NavBar = (props) => {
   return (
     <div className="navBar extended">
       {/* Logo */}
       <Grid container justify="center">
-        <Link
+        {/* <Link
           to="/"
           className={`logo 
                         ${props.collapsed ? "logoSmall" : "logoBig"}`}
         >
           Elearning
-        </Link>
+        </Link> */}
+        <img src="images/logo-white.png" className="logo-img" />
       </Grid>
       {/* Navigation Buttons */}
       <List component="nav">
         {/* Render each navigation button in the list with props */}
         {navLinks.map((navLink) => (
           // Only render NavButtons which are allowed for the user type
-          <NavButton
-            key={navLink.text}
-            text={navLink.text}
-            icon={navLink.icon}
-            path={navLink.path}
-            collapsed={props.collapsed}
-            subLinks={navLink.subLinks}
-            state={navLink.state}
-            dispatchMethod={navLink.dispatchMethod}
-          />
+          <NavButton key={navLink.text} text={navLink.text} icon={navLink.icon} path={navLink.path} collapsed={props.collapsed} subLinks={navLink.subLinks} />
         ))}
       </List>
     </div>

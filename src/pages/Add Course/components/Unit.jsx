@@ -8,13 +8,16 @@ import LinearProgressWithLabel from "../../../components/LinearProgress/LinearPr
 import VideoPicker from "../../../components/VideoPicker/VideoPicker";
 import Select from "../../../components/Select/SelectBox";
 
-import { cancelVideoUpload, uploadVideo } from "../../../service/concept.service";
+import { cancelVideoUpload, getAllConcepts, uploadVideo } from "../../../service/concept.service";
 import { conceptActions } from "../../../store/concept-slice";
 import AudioPicker from "../../../components/AudioPicker/AudioPicker";
 import RichEditor from "../../../components/RichEditor/RichEditor";
 import QuizCurriculum from "./QuizCurrculum";
 import { curriculumActions } from "../../../store/curriculum-slice";
 import { Draggable } from "react-beautiful-dnd";
+import MultiSelect from "../../../components/MultiSelect/MultiSelect";
+import { useFetch } from "../../../components/useFetch";
+import FilePicker from "../../../components/FilePicker/FilePicker";
 
 const types = [
   {
@@ -26,8 +29,12 @@ const types = [
     value: "audio",
   },
   {
-    label: "Resources",
-    value: "resource",
+    label: "Pre Test",
+    value: "preTest",
+  },
+  {
+    label: "File",
+    value: "file",
   },
   {
     label: "Note",
@@ -38,18 +45,37 @@ const types = [
     value: "quiz",
   },
 ];
+const concepts = [];
+
 const Unit = (props) => {
+  const errors = useSelector((state) => state.curriculum.errors);
+
   const [collapsed, setCollapsed] = useState(true);
   const [name, setName] = useState();
   const [type, setType] = useState();
   const [note, setNote] = useState();
   const [video, setVideo] = useState({});
   const [audio, setAudio] = useState({});
+  const [file, setFile] = useState({});
+
+  const [unitError, setUnitError] = useState(false);
+  const [errorKeys, setErrorKeys] = useState([]);
+  const [preTest, setPreTest] = useState();
+  const { loading, data } = useFetch(getAllConcepts);
 
   const [quiz, setQuiz] = useState([]);
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    data &&
+      data.map((concept, i) => {
+        concepts.push({
+          value: concept._id,
+          label: concept.name,
+        });
+      });
+  }, [data]);
   useEffect(() => {
     if (props.element == null) {
       dispatch(
@@ -59,7 +85,8 @@ const Unit = (props) => {
           type: "",
           video: "",
           audio: "",
-          resources: [],
+          preTest: "",
+          file: "",
           quiz: [],
           note: "",
           name: "",
@@ -73,8 +100,22 @@ const Unit = (props) => {
       setAudio(props.element.audio);
       setQuiz(props.element.quiz);
       setNote(props.element.note);
+      setFile(props.element.file);
     }
   }, []);
+
+  useEffect(() => {
+    setUnitError(false);
+    for (let key in errors) {
+      const ids = key.split("_");
+      setErrorKeys(ids);
+
+      if (ids[0] == props.sectionId + 1 && ids[1] == props.unitId + 1) {
+        setUnitError(true);
+        break;
+      }
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (props.element != null) {
@@ -84,6 +125,8 @@ const Unit = (props) => {
       setAudio(props.element.audio);
       setQuiz(props.element.quiz);
       setNote(props.element.note);
+      setPreTest(props.element.preTest);
+      setFile(props.element.file);
     }
   }, [props.element]);
   const toggleCollapse = () => {
@@ -98,6 +141,16 @@ const Unit = (props) => {
       })
     );
     setName(e.target.value);
+  };
+  const handlePreTestChange = (e) => {
+    setPreTest(e.target.value);
+    dispatch(
+      curriculumActions.modifyUnitPreTest({
+        sectionId: props.sectionId,
+        unitId: props.unitId,
+        preTest: e.target.value,
+      })
+    );
   };
   const handleTypeChange = (e) => {
     dispatch(
@@ -139,6 +192,26 @@ const Unit = (props) => {
       })
     );
   };
+  const handleFileUpload = (e) => {
+    setFile(e);
+    dispatch(
+      curriculumActions.modifyUnitFile({
+        sectionId: props.sectionId,
+        unitId: props.unitId,
+        file: e,
+      })
+    );
+  };
+  const deleteFile = () => {
+    setFile({});
+    dispatch(
+      curriculumActions.modifyUnitFile({
+        sectionId: props.sectionId,
+        unitId: props.unitId,
+        file: {},
+      })
+    );
+  };
   const handleAudioUpload = (e) => {
     setAudio(e);
     dispatch(
@@ -162,7 +235,7 @@ const Unit = (props) => {
   return (
     <Draggable draggableId={`0${props.unitId}`} index={props.unitId}>
       {(provided) => (
-        <div className="sublesson mt-2" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+        <div className={`sublesson mt-2 ${unitError && "error-border"}`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
           <div className="sublesson-head">
             <Grid container spacing={2} justifyContent="space-between">
               <Grid item onClick={toggleCollapse} xs={11}>
@@ -205,15 +278,53 @@ const Unit = (props) => {
           </div>
           {props.element && !props.element.isConceptLink && !collapsed && (
             <div className="sublesson-body">
-              <Input label="Unit Name" value={name} id={"name"} type="text" name="name" onChange={handleNameChange} placeholder="Please enter the unit name" hideLabel={false} />
+              <Input
+                label="Unit Name"
+                value={name}
+                id={"name"}
+                type="text"
+                name="name"
+                onChange={handleNameChange}
+                placeholder="Please enter the unit name"
+                hideLabel={false}
+                error={errors[`${props.sectionId + 1}_${props.unitId + 1}_name`]}
+              />
               <div className="mt-2">
-                <Select label="Unit Type" value={type} id="type" name="type" onChange={handleTypeChange} placeholder={"Select Unit type"} hideLabel={false} values={types} />
+                <Select
+                  label="Unit Type"
+                  value={type}
+                  id="type"
+                  name="type"
+                  onChange={handleTypeChange}
+                  placeholder={"Select Unit type"}
+                  hideLabel={false}
+                  values={types}
+                  error={errors[`${props.sectionId + 1}_${props.unitId + 1}_type`]}
+                />
               </div>
               <div className="mt-3">
-                {type == "video" && <VideoPicker setVideo={handleVideoUpload} video={video} deleteVideo={deleteVideo} />}
-                {type == "audio" && <AudioPicker setAudio={handleAudioUpload} audio={audio} deleteAudio={deleteAudio} />}
-                {type == "note" && <RichEditor callback={handleNoteChange} content={note} />}
+                {type == "video" && (
+                  <VideoPicker setVideo={handleVideoUpload} video={video} deleteVideo={deleteVideo} error={errorKeys[2] == "video" && errors[`${props.sectionId + 1}_${props.unitId + 1}_video`]} />
+                )}
+                {type == "audio" && (
+                  <AudioPicker setAudio={handleAudioUpload} audio={audio} deleteAudio={deleteAudio} error={errorKeys[2] == "audio" && errors[`${props.sectionId + 1}_${props.unitId + 1}_audio`]} />
+                )}
+                {type == "note" && <RichEditor callback={handleNoteChange} content={note} error={errorKeys[2] == "note" && errors[`${props.sectionId + 1}_${props.unitId + 1}_note`]} />}
                 {type == "quiz" && <QuizCurriculum quiz={props.element.quiz} sectionId={props.sectionId} unitId={props.unitId} />}
+                {type == "preTest" && (
+                  <Select
+                    label="Select a main concept to test the knowledge of the student"
+                    id={"preTest"}
+                    name={"preTest"}
+                    onChange={handlePreTestChange}
+                    value={preTest}
+                    placeholder={"Please select the concept to be tested in the pre test"}
+                    hideLabel={false}
+                    class="mt-3"
+                    values={concepts}
+                  />
+                )}
+                {type == "file" && <FilePicker setFile={handleFileUpload} file={file} deleteFile={deleteFile} />}
               </div>
             </div>
           )}

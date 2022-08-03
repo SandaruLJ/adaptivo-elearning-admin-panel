@@ -8,6 +8,11 @@ import UploadVideo from "./UploadVideo";
 import Input from "../../../components/Input/Input";
 import { conceptActions } from "../../../store/concept-slice";
 import { useDispatch, useSelector } from "react-redux";
+import Visual from "./LearningStyles/Visual";
+import Verbal from "./LearningStyles/Verbal";
+import Active from "./LearningStyles/Active";
+import Sensing from "./LearningStyles/Sensing";
+import Intuitive from "./LearningStyles/Intuitive";
 
 const LearningObject = (props) => {
   const [collapsed, setCollapsed] = useState(true);
@@ -24,9 +29,13 @@ const LearningObject = (props) => {
         conceptActions.addLO({
           id: props.num,
           name: "",
-          video: "",
-          audio: "",
-          resources: "",
+          visual: {},
+          verbal: {},
+          active: {
+            quiz: [],
+          },
+          sensing: {},
+          intuitive: {},
           quiz: [],
         })
       );
@@ -73,10 +82,18 @@ const LearningObject = (props) => {
       {!collapsed && (
         <div className="section-body">
           <Input label="Learning Object Name" value={name} id={"name"} type="text" name={"name"} onChange={handleChange} placeholder="Please enter the LO name" hideLabel={false} />
-          <UploadVideo loId={props.num} />
+          <div className="lo-caption">Upload materials for different learning styles</div>
+          <Visual loId={props.num} />
+          <Verbal loId={props.num} />
+          <Active loId={props.num} />
+          <Sensing loId={props.num} />
+          <Intuitive loId={props.num} />
+          <div className="lo-caption">Upload quiz to test learning object knowledge</div>
+          <Quiz loId={props.num} title="Quiz" />
+          {/* <UploadVideo loId={props.num} />
           <UploadAudio loId={props.num} />
           <UploadResources loId={props.num} />
-          <Quiz loId={props.num} />
+          <Quiz loId={props.num} /> */}
         </div>
       )}
     </div>

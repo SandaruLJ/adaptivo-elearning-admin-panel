@@ -2,10 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const navMenuSlice = createSlice({
   name: "navMenu",
-  initialState: { isCourseClicked: false, isCategoryClicked: false, isInstructorsClicked: false, isUsersClicked: false, isSubscriptionClicked: false },
+  initialState: { isCourseClicked: false, isCategoryClicked: false, isInstructorsClicked: false, isUsersClicked: false, isSubscriptionClicked: false, mainMenu: "", subMenu: "" },
   reducers: {
     clickCourses(state) {
-      console.log("CLick Course");
       state.isCourseClicked = true;
       state.isCategoryClicked = false;
       state.isInstructorsClicked = false;
@@ -39,6 +38,12 @@ const navMenuSlice = createSlice({
       state.isInstructorsClicked = false;
       state.isUsersClicked = false;
       state.isSubscriptionClicked = true;
+    },
+    handleMainMenuChange(state, actions) {
+      state.mainMenu = actions.payload.mainMenu;
+    },
+    handleSubMenuChange(state, actions) {
+      state.subMenu = actions.payload.subMenu;
     },
   },
 });

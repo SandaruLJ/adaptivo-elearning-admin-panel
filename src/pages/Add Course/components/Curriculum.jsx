@@ -9,12 +9,15 @@ import CurriculumSection from "./CurriculumSection";
 const Curriculum = (props) => {
   const [sectionCount, setSectionCount] = useState([0]);
   const sections = useSelector((state) => state.curriculum.sections);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (sections.length > 0) {
       setSectionCount([...Array(sections.length).keys()]);
     }
+    console.log("Sections");
+    console.log(sections);
   }, [sections]);
 
   const addSection = () => {
@@ -29,6 +32,8 @@ const Curriculum = (props) => {
     }
   };
   const handleSubmit = async () => {
+    // props.changeTab(3)
+    dispatch(curriculumActions.setErrors());
     // const concept = {
     //   name: conceptName,
     //   preRequisites: conceptPreRequisite,
@@ -54,7 +59,7 @@ const Curriculum = (props) => {
           <CustomButton name="Previous" color="grey" type="cancel" onclick={() => props.changeTab(1)} />
         </Grid>
         <Grid item>
-          <CustomButton name="Next" color="orange" type="submit" onclick={() => props.changeTab(3)} />
+          <CustomButton name="Next" color="orange" type="submit" onclick={handleSubmit} />
         </Grid>
       </Grid>
     </div>

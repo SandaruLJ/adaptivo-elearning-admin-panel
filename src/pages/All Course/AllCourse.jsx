@@ -3,7 +3,7 @@ import TitleBar from "../../components/TitleBar/TitleBar";
 import "./AllCourse.css";
 import Table from "../../components/Table/Table";
 import { useFetch } from "../../components/useFetch";
-import { getAllCourses } from "../../service/course.service";
+import { deleteCourseById, getAllCourses } from "../../service/course.service";
 
 const breadcrumbs = [
   {
@@ -24,14 +24,20 @@ const AllCourse = () => {
   data &&
     data.map((course, i) => {
       rows.push({
-        id: i + 1,
+        id: course._id,
         no: i + 1,
+        thumbnail: course.thumbnail.url,
         title: course.title,
-        category: course.description,
+        category: course.category.title,
         status: "Active",
       });
     });
   const columns = [
+    {
+      field: "thumbnail",
+      name: "",
+      type: "image",
+    },
     {
       field: "title",
       name: "Title",
@@ -49,7 +55,7 @@ const AllCourse = () => {
   return (
     <>
       <TitleBar title="Courses" breadcrumbs={breadcrumbs} />
-      <Table columns={columns} rows={rows} loading={loading} />
+      <Table columns={columns} rows={rows} loading={loading} delete={deleteCourseById} />
     </>
   );
 };

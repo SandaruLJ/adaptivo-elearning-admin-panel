@@ -56,10 +56,10 @@ const AddConcept = forwardRef((props, ref) => {
     const response = await addConcept(concept);
     console.log(response);
     if (response) {
-      dispatch(conceptActions.resetState());
-      setName("");
-      setPreRequisite([]);
-      setLOCount([0]);
+      // dispatch(conceptActions.resetState());
+      // setName("");
+      // setPreRequisite([]);
+      // setLOCount([0]);
     }
   };
   useEffect(() => {

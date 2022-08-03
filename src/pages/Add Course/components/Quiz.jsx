@@ -11,7 +11,14 @@ const Quiz = (props) => {
   const [questionCount, setQuestionCount] = useState([0]);
   const [collapsed, setCollapsed] = useState(true);
   const dispatch = useDispatch();
-  const quiz = useSelector((state) => state.concept.learningObjects[props.loId - 1]["quiz"]);
+
+  const quiz = useSelector((state) => {
+    if (props.style) {
+      return state.concept.learningObjects[props.loId - 1][props.style]["quiz"];
+    } else {
+      return state.concept.learningObjects[props.loId - 1]["quiz"];
+    }
+  });
 
   useEffect(() => {
     if (quiz.length > 0) {
@@ -25,7 +32,11 @@ const Quiz = (props) => {
   const deleteQuestion = (i, index) => {
     if (questionCount.length > 1) {
       setQuestionCount(questionCount.filter((elem) => elem !== i));
-      dispatch(conceptActions.deleteQuestion({ id: index, loId: props.loId }));
+      if (props.style) {
+        dispatch(conceptActions.deleteLSQuestion({ id: index, loId: props.loId, style: props.style }));
+      } else {
+        dispatch(conceptActions.deleteQuestion({ id: index, loId: props.loId }));
+      }
     } else {
       alert("There should be atleast 1 question");
     }
@@ -42,7 +53,7 @@ const Quiz = (props) => {
             <Menu />
           </Grid>
           <Grid item>
-            <h3>04. Quiz</h3>
+            <h3>{props.title ? props.title : "04. Quiz"}</h3>
           </Grid>
         </Grid>
       </div>
@@ -53,6 +64,7 @@ const Quiz = (props) => {
               num={index + 1}
               loId={props.loId}
               question={quiz[index]}
+              style={props.style}
               delete={() => {
                 deleteQuestion(elem, index);
               }}

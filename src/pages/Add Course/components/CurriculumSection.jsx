@@ -101,6 +101,7 @@ const CurriculumSection = (props) => {
           name: c.name,
           isConceptLink: true,
           loId: c._id,
+          conceptId: concept._id,
           conceptName: concept.name,
         })
       );

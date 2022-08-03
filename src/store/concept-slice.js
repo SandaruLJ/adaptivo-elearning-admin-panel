@@ -22,7 +22,10 @@ const conceptSlice = createSlice({
       state.learningObjects = temp;
     },
     modifyVideo(state, actions) {
-      state.learningObjects[actions.payload.id - 1]["video"] = actions.payload.video;
+      state.learningObjects[actions.payload.id - 1][actions.payload.style]["video"] = actions.payload.video;
+    },
+    modifyFile(state, actions) {
+      state.learningObjects[actions.payload.id - 1][actions.payload.style][actions.payload.type] = actions.payload.file;
     },
     modifyLOName(state, actions) {
       state.learningObjects[actions.payload.id - 1]["name"] = actions.payload.name;
@@ -30,8 +33,16 @@ const conceptSlice = createSlice({
     modifyAudio(state, actions) {
       state.learningObjects[actions.payload.id - 1]["audio"] = actions.payload.audio;
     },
+    modifyLSQuiz(state, actions) {
+      state.learningObjects[actions.payload.loId - 1][actions.payload.style]["quiz"][actions.payload.id - 1] = actions.payload.question;
+    },
     modifyQuiz(state, actions) {
       state.learningObjects[actions.payload.loId - 1]["quiz"][actions.payload.id - 1] = actions.payload.question;
+    },
+    deleteLSQuestion(state, actions) {
+      const temp = state.learningObjects;
+      temp[actions.payload.loId - 1][actions.payload.style]["quiz"].splice(actions.payload.id, 1);
+      state.questions = temp;
     },
     deleteQuestion(state, actions) {
       const temp = state.learningObjects;

@@ -119,8 +119,8 @@ const PublishCourse = (props) => {
     dispatch(curriculumActions.setErrors());
 
     // validatePublishCourse();
-    // let request = { ...course, curriculum: curriculum };
-    // addCourse(request);
+    let request = { ...course, curriculum: curriculum };
+    addCourse(request);
   };
   return (
     <div>

@@ -57,9 +57,19 @@ const curriculumSlice = createSlice({
       temp[actions.payload.sectionId]["units"][actions.payload.unitId]["audio"] = actions.payload.audio;
       state.sections = temp;
     },
+    modifyUnitFile(state, actions) {
+      const temp = state.sections;
+      temp[actions.payload.sectionId]["units"][actions.payload.unitId]["file"] = actions.payload.file;
+      state.sections = temp;
+    },
     modifyUnitNote(state, actions) {
       const temp = state.sections;
       temp[actions.payload.sectionId]["units"][actions.payload.unitId]["note"] = actions.payload.note;
+      state.sections = temp;
+    },
+    modifyUnitPreTest(state, actions) {
+      const temp = state.sections;
+      temp[actions.payload.sectionId]["units"][actions.payload.unitId]["preTest"] = actions.payload.preTest;
       state.sections = temp;
     },
     modifyUnitQuiz(state, actions) {

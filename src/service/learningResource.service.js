@@ -4,6 +4,7 @@ import { getAll, save } from "./http.service";
 const url = `${process.env.REACT_APP_BE_URL}api/learningResources`;
 let videoController = new AbortController();
 let audioController = new AbortController();
+let fileController = new AbortController();
 
 // export const addConcept = async (data) => {
 //   const savedConcept = await save(url, data);
@@ -23,12 +24,20 @@ export const getAudioSignedUrl = async (fileName) => {
   return signedUrl;
 };
 
+export const getFileSignedUrl = async (fileName) => {
+  const signedUrl = await getAll(`${url}/url/file/${fileName}`);
+  return signedUrl;
+};
+
 export const cancelVideoUpload = () => {
   videoController.abort();
 };
 
 export const cancelAudioUpload = () => {
   audioController.abort();
+};
+export const cancelFileUpload = () => {
+  fileController.abort();
 };
 
 export const uploadVideo = async (file, setProgress, setUploadError) => {
@@ -71,6 +80,33 @@ export const uploadAudio = async (file, setProgress, setUploadError) => {
       setProgress(percentCompleted);
     },
     signal: audioController.signal,
+  };
+
+  axios
+    .put(signedUrl.url, file, config)
+    .then(function (res) {
+      console.log("File Uploaded");
+      setUploadError(null);
+    })
+    .catch(function (err) {
+      console.log(err);
+      setUploadError(err);
+      setProgress(0);
+    });
+};
+export const uploadFile = async (file, setProgress, setUploadError) => {
+  const signedUrl = await getFileSignedUrl(file.name);
+  fileController = new AbortController();
+
+  var config = {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    onUploadProgress: function (progressEvent) {
+      var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+      setProgress(percentCompleted);
+    },
+    signal: fileController.signal,
   };
 
   axios

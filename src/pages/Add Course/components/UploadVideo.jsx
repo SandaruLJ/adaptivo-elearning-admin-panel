@@ -18,14 +18,16 @@ const UploadVideo = (props) => {
   const [progress, setProgress] = useState(0);
   const [uploadError, setUploadError] = useState();
   const dispatch = useDispatch();
-  const video = useSelector((state) => state.concept.learningObjects[props.loId - 1]["video"]);
+  const video = useSelector((state) => state.concept.learningObjects[props.loId - 1][props.style][props.type]);
 
   useEffect(() => {
-    setSource(video.url);
-    setFileName(video.name);
-    setFileSize(video.size);
-    setDuration(video.duration);
-    setProgress(100);
+    if (video) {
+      setSource(video.url);
+      setFileName(video.name);
+      setFileSize(video.size);
+      setDuration(video.duration);
+      setProgress(100);
+    }
   }, []);
 
   const handleFileChange = async (event) => {
@@ -46,9 +48,11 @@ const UploadVideo = (props) => {
     media.onloadedmetadata = function () {
       let duration = convertSeconds(media.duration);
       dispatch(
-        conceptActions.modifyVideo({
+        conceptActions.modifyFile({
           id: props.loId,
-          video: {
+          style: props.style,
+          type: props.type,
+          file: {
             name: f.name,
             duration: duration,
             size: fileSize,
@@ -94,7 +98,7 @@ const UploadVideo = (props) => {
             <Menu />
           </Grid>
           <Grid item>
-            <h3>01. Upload Video</h3>
+            <h3>{props.title ? props.title : "01. Upload Video"}</h3>
           </Grid>
         </Grid>
       </div>

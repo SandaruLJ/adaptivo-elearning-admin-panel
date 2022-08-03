@@ -114,3 +114,20 @@
 .error-border {
   border: 3px solid #d32f2f;
 }
+.learning-style-container .sublesson-body,
+.learning-style-container .sublesson-head {
+  background: #f6f7fb;
+}
+.learning-style-container .section {
+  background-color: #fff;
+}
+.learning-style-container.sublesson-body {
+  padding-top: 0;
+}
+.lo-caption {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(0, 0, 0);
+  letter-spacing: 1px;
+}

@@ -71,7 +71,7 @@ const navLinks = [
       },
       {
         text: "Add User",
-        path: "/add/user",
+        path: "/users/add",
       },
     ],
   },

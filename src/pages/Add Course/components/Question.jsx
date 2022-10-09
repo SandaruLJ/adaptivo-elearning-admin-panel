@@ -23,26 +23,42 @@ const QuestionComponent = (props) => {
     setAnswers(temp);
     let ques = { ...props.question };
     ques.answers = temp;
-    dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...ques } }));
+    if (props.style) {
+      dispatch(conceptActions.modifyLSQuiz({ loId: props.loId, id: props.num, style: props.style, question: { ...ques } }));
+    } else {
+      dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...ques } }));
+    }
   };
   const handleQuestionChange = (value) => {
     setQuestion(value);
     let temp = { ...props.question };
     temp.title = value;
-    dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    if (props.style) {
+      dispatch(conceptActions.modifyLSQuiz({ loId: props.loId, id: props.num, style: props.style, question: { ...temp } }));
+    } else {
+      dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    }
   };
   const handleExplanationChange = (value) => {
     setExplanation(value);
     let temp = { ...props.question };
     temp.explanation = value;
-    dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    if (props.style) {
+      dispatch(conceptActions.modifyLSQuiz({ loId: props.loId, id: props.num, style: props.style, question: { ...temp } }));
+    } else {
+      dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    }
   };
 
   const handleCorrectAnswerChange = (value) => {
     setCorrectAnswer(value);
     let temp = { ...props.question };
     temp.correctAnswer = value;
-    dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    if (props.style) {
+      dispatch(conceptActions.modifyLSQuiz({ loId: props.loId, id: props.num, style: props.style, question: { ...temp } }));
+    } else {
+      dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+    }
   };
 
   const deleteAnswer = (i) => {
@@ -53,7 +69,12 @@ const QuestionComponent = (props) => {
       setAnswers(temp);
       let ques = { ...props.question };
       ques.answers = temp;
-      dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...ques } }));
+      // dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...ques } }));
+      if (props.style) {
+        dispatch(conceptActions.modifyLSQuiz({ loId: props.loId, id: props.num, style: props.style, question: { ...ques } }));
+      } else {
+        dispatch(conceptActions.modifyQuiz({ loId: props.loId, id: props.num, question: { ...temp } }));
+      }
     } else {
       alert("There should be atleast 2 answers");
     }
@@ -82,19 +103,36 @@ const QuestionComponent = (props) => {
   }, [props.question]);
   useEffect(() => {
     if (props.question == null) {
-      dispatch(
-        conceptActions.modifyQuiz({
-          loId: props.loId,
-          id: props.num,
-          question: {
+      if (props.style) {
+        dispatch(
+          conceptActions.modifyLSQuiz({
+            loId: props.loId,
             id: props.num,
-            title: question,
-            explanation: explanation,
-            correctAnswer: correctAnswer,
-            answers: answers,
-          },
-        })
-      );
+            style: props.style,
+            question: {
+              id: props.num,
+              title: question,
+              explanation: explanation,
+              correctAnswer: correctAnswer,
+              answers: answers,
+            },
+          })
+        );
+      } else {
+        dispatch(
+          conceptActions.modifyQuiz({
+            loId: props.loId,
+            id: props.num,
+            question: {
+              id: props.num,
+              title: question,
+              explanation: explanation,
+              correctAnswer: correctAnswer,
+              answers: answers,
+            },
+          })
+        );
+      }
     }
   }, []);
 

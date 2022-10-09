@@ -2,10 +2,13 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const curriculumSlice = createSlice({
   name: "curriculum",
-  initialState: { sections: [] },
+  initialState: { sections: [], errors: {} },
   reducers: {
     setName(state, actions) {
       state.sections[actions.payload.id] = actions.payload.name;
+    },
+    setSection(state, actions) {
+      state.sections = actions.payload;
     },
     addSection(state, actions) {
       const temp = state.sections;
@@ -54,9 +57,19 @@ const curriculumSlice = createSlice({
       temp[actions.payload.sectionId]["units"][actions.payload.unitId]["audio"] = actions.payload.audio;
       state.sections = temp;
     },
+    modifyUnitFile(state, actions) {
+      const temp = state.sections;
+      temp[actions.payload.sectionId]["units"][actions.payload.unitId]["file"] = actions.payload.file;
+      state.sections = temp;
+    },
     modifyUnitNote(state, actions) {
       const temp = state.sections;
       temp[actions.payload.sectionId]["units"][actions.payload.unitId]["note"] = actions.payload.note;
+      state.sections = temp;
+    },
+    modifyUnitPreTest(state, actions) {
+      const temp = state.sections;
+      temp[actions.payload.sectionId]["units"][actions.payload.unitId]["preTest"] = actions.payload.preTest;
       state.sections = temp;
     },
     modifyUnitQuiz(state, actions) {
@@ -75,42 +88,101 @@ const curriculumSlice = createSlice({
       temp[actions.payload.sectionId]["units"].splice(actions.payload.unitId, 1);
       state.sections = temp;
     },
-    // setPrerequisites(state, actions) {
-    //   state.preRequisites = actions.payload;
-    // },
-    // addLO(state, actions) {
-    //   const temp = state.learningObjects;
-    //   temp[actions.payload.id - 1] = actions.payload;
-    //   state.learningObjects = temp;
-    // },
-    // deleteLO(state, actions) {
-    //   //   const temp = state.questions.filter((question) => question.id !== actions.payload.id + 1);
-    //   const temp = state.learningObjects;
-    //   temp.splice(actions.payload.id, 1);
-    //   state.learningObjects = temp;
-    // },
-    // modifyVideo(state, actions) {
-    //   state.learningObjects[actions.payload.id - 1]["video"] = actions.payload.video;
-    // },
-    // modifyLOName(state, actions) {
-    //   state.learningObjects[actions.payload.id - 1]["name"] = actions.payload.name;
-    // },
-    // modifyAudio(state, actions) {
-    //   state.learningObjects[actions.payload.id - 1]["audio"] = actions.payload.audio;
-    // },
-    // modifyQuiz(state, actions) {
-    //   state.learningObjects[actions.payload.loId - 1]["quiz"][actions.payload.id - 1] = actions.payload.question;
-    // },
-    // deleteQuestion(state, actions) {
-    //   const temp = state.learningObjects;
-    //   temp[actions.payload.loId - 1]["quiz"].splice(actions.payload.id, 1);
-    //   state.questions = temp;
-    // },
-    // resetState(state, actions) {
-    //   state.name = "";
-    //   state.preRequisites = [];
-    //   state.learningObjects = [];
-    // },
+    setErrors(state, actions) {
+      //Errors are set in the format sectionNum_unitNum_fieldName
+      state.errors = {};
+      if (state.sections.length === 0) {
+        let name = `1_0_name`;
+        state.errors[name] = "Please enter a section Name";
+        name = `1_1_name`;
+        state.errors[name] = "Please enter a unit name";
+        name = `1_1_type`;
+        state.errors[name] = "Please enter a unit type";
+      }
+      state.sections.map((section) => {
+        if (section.name == undefined || !section.name.trim()) {
+          let name = `${section.id + 1}_0_name`;
+          state.errors[name] = "Please enter a section Name";
+        }
+        section.units.map((unit) => {
+          // let name = `${section.id + 1}_0_name`;
+          if (!unit.name.trim()) {
+            let name = `${unit.sectionId + 1}_${unit.unitId + 1}_name`;
+            state.errors[name] = "Please enter a unit name";
+          }
+          if (!unit.type.trim()) {
+            let name = `${unit.sectionId + 1}_${unit.unitId + 1}_type`;
+            state.errors[name] = "Please select a unit type";
+          }
+          if (unit.type == "video") {
+            try {
+              if (!unit.video.trim()) {
+                let name = `${unit.sectionId + 1}_${unit.unitId + 1}_video`;
+                state.errors[name] = "Please upload a video";
+              }
+            } catch (err) {
+              if (Object.keys(unit.video).length == 0) {
+                let name = `${unit.sectionId + 1}_${unit.unitId + 1}_video`;
+                state.errors[name] = "Please upload a video";
+              }
+            }
+          }
+          if (unit.type == "audio") {
+            if (!unit.audio.trim()) {
+              let name = `${unit.sectionId + 1}_${unit.unitId + 1}_audio`;
+              state.errors[name] = "Please upload an audio";
+            }
+          }
+          if (unit.type == "note") {
+            if (!unit.note.trim() || unit.note == "<p></p>\n") {
+              let name = `${unit.sectionId + 1}_${unit.unitId + 1}_note`;
+              state.errors[name] = "Please enter a note";
+            }
+          }
+          if (unit.type == "quiz") {
+            if (unit.quiz.length == 0) {
+              let name = `${unit.sectionId + 1}_${unit.unitId + 1}_quiz`;
+              state.errors[name] = "Please add questions";
+            } else {
+              unit.quiz.map((quiz) => {
+                if (!quiz.title.trim()) {
+                  let name = `${unit.sectionId + 1}_${unit.unitId + 1}_quiz_${quiz.id}_title`;
+                  state.errors[name] = "Please enter a question";
+                }
+                if (!quiz.explanation.trim()) {
+                  let name = `${unit.sectionId + 1}_${unit.unitId + 1}_quiz_${quiz.id}_explanation`;
+                  state.errors[name] = "Please enter an explanation";
+                }
+
+                if (quiz.answers.length < 2) {
+                  let name = `${unit.sectionId + 1}_${unit.unitId + 1}_quiz_${quiz.id}_answers`;
+                  state.errors[name] = "Please enter answer";
+                }
+                if (quiz.answers.length > 0) {
+                  quiz.answers.map((answer) => {
+                    if (answer == "<p></p>\n") {
+                      let name = `${unit.sectionId + 1}_${unit.unitId + 1}_quiz_${quiz.id}_answers`;
+                      state.errors[name] = "Please enter answer";
+                    }
+                  });
+                }
+              });
+            }
+          }
+        });
+      });
+      // for (var section in state.sections) {
+      // console.log(section.id);
+      // if (!section.name.trim()) {
+      //   console.log(true);
+      //   // let name = `${section.id + 1}_0_name`;
+      //   // state.errors[name] = "Please enter a section Name";
+      //   // console.log(state.errors);
+      // } else {
+      //   console.log(false);
+      // }
+      // }
+    },
   },
 });
 

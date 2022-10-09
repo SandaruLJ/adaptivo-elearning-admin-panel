@@ -17,6 +17,7 @@ const store = configureStore({
     course: courseSlice.reducer,
     ui: uiSlice.reducer
   },
+  devTools: true,
 });
 
 export default store;

@@ -3,6 +3,7 @@ import { Button, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LinearProgressWithLabel from "../../../components/LinearProgress/LinearProgresswithLabel";
+import { convertSeconds, formatBytes } from "../../../helpers/utils";
 
 import { cancelVideoUpload, uploadVideo } from "../../../service/concept.service";
 import { conceptActions } from "../../../store/concept-slice";
@@ -17,14 +18,16 @@ const UploadVideo = (props) => {
   const [progress, setProgress] = useState(0);
   const [uploadError, setUploadError] = useState();
   const dispatch = useDispatch();
-  const video = useSelector((state) => state.concept.learningObjects[props.loId - 1]["video"]);
+  const video = useSelector((state) => state.concept.learningObjects[props.loId - 1][props.style][props.type]);
 
   useEffect(() => {
-    setSource(video.url);
-    setFileName(video.name);
-    setFileSize(video.size);
-    setDuration(video.duration);
-    setProgress(100);
+    if (video) {
+      setSource(video.url);
+      setFileName(video.name);
+      setFileSize(video.size);
+      setDuration(video.duration);
+      setProgress(100);
+    }
   }, []);
 
   const handleFileChange = async (event) => {
@@ -45,9 +48,11 @@ const UploadVideo = (props) => {
     media.onloadedmetadata = function () {
       let duration = convertSeconds(media.duration);
       dispatch(
-        conceptActions.modifyVideo({
+        conceptActions.modifyFile({
           id: props.loId,
-          video: {
+          style: props.style,
+          type: props.type,
+          file: {
             name: f.name,
             duration: duration,
             size: fileSize,
@@ -84,24 +89,6 @@ const UploadVideo = (props) => {
     cancelVideoUpload();
     setProgress(0);
   };
-  function convertSeconds(seconds) {
-    var convert = function (x) {
-      return x < 10 ? "0" + x : x;
-    };
-    return convert(parseInt(seconds / (60 * 60))) + ":" + convert(parseInt((seconds / 60) % 60)) + ":" + Math.floor(convert(seconds % 60));
-  }
-
-  function formatBytes(bytes, decimals = 2) {
-    if (bytes === 0) return "0 Bytes";
-
-    const k = 1024;
-    const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
-  }
 
   return (
     <div className="sublesson mt-2">
@@ -111,7 +98,7 @@ const UploadVideo = (props) => {
             <Menu />
           </Grid>
           <Grid item>
-            <h3>01. Upload Video</h3>
+            <h3>{props.title ? props.title : "01. Upload Video"}</h3>
           </Grid>
         </Grid>
       </div>

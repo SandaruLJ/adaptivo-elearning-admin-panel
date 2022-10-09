@@ -1,3 +1,4 @@
+import { Error } from "@mui/icons-material";
 import { AppBar, Box, Tab, Tabs, Typography, useTheme } from "@mui/material";
 import React, { forwardRef, useImperativeHandle } from "react";
 import SwipeableViews from "react-swipeable-views";
@@ -45,7 +46,7 @@ const CustomTab = forwardRef((props, ref) => {
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} indicatorColor="secondary">
           {props.tabs.map((tab, i) => {
-            return <Tab icon={tab.icon} iconPosition="start" label={tab.label} {...a11yProps(i)} />;
+            return <Tab icon={tab.error ? <Error /> : tab.icon} iconPosition="start" className={`${tab.error && "error"}`} label={tab.label} {...a11yProps(i)} />;
           })}
         </Tabs>
       </AppBar>

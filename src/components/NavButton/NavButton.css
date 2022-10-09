@@ -6,21 +6,21 @@
   color: white;
 }
 .navButton.MuiListItem-button:hover,
-.navButton.MuiListItem-button.active {
+.navButton.MuiListItem-button.selected {
   background-color: white !important;
   border-radius: 7px;
   transition: "ease-in";
   transition-duration: 250ms;
 }
 .navButton.MuiListItem-button:hover .MuiListItemText-primary,
-.navButton.MuiListItem-button.active .MuiListItemText-primary,
+.navButton.MuiListItem-button.selected .MuiListItemText-primary,
 .sublink.MuiListItem-button .MuiListItemText-primary {
   color: black;
   transition: "ease-in";
   transition-duration: 250ms;
 }
 .navButton.MuiListItem-button:hover .MuiListItemIcon-root,
-.navButton.MuiListItem-button.active .MuiListItemIcon-root {
+.navButton.MuiListItem-button.selected .MuiListItemIcon-root {
   color: black;
   transition: "ease-in";
   transition-duration: 250ms;

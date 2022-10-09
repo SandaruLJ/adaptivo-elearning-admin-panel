@@ -177,8 +177,8 @@ export default function validateInfo(values) {
   //   }
   // }
 
-   //Validate Question
-   if (values.hasOwnProperty("question")) {
+  //Validate Question
+  if (values.hasOwnProperty("question")) {
     if (!values.question.trim()) {
       errors.question = "Please enter a Question";
     }
@@ -188,6 +188,94 @@ export default function validateInfo(values) {
   if (values.hasOwnProperty("answer")) {
     if (!values.no.trim()) {
       errors.no = "Please enter the Answer";
+    }
+  }
+
+  //Course Validations
+
+  if (values.hasOwnProperty("title")) {
+    if (!values.title.trim()) {
+      errors.title = "Please enter a title";
+    }
+  }
+
+  if (values.hasOwnProperty("subtitle")) {
+    if (!values.subtitle.trim()) {
+      errors.subtitle = "Please enter a sub title";
+    }
+  }
+  if (values.hasOwnProperty("category")) {
+    if (!values.category.trim()) {
+      errors.category = "Please select a category";
+    }
+  }
+  if (values.hasOwnProperty("subCategory")) {
+    if (!values.subCategory.trim()) {
+      errors.subCategory = "Please select a sub Category";
+    }
+  }
+  if (values.hasOwnProperty("language")) {
+    if (!values.language.trim()) {
+      errors.language = "Please select a language";
+    }
+  }
+  if (values.hasOwnProperty("level")) {
+    if (!values.level.trim()) {
+      errors.level = "Please select a level";
+    }
+  }
+
+  if (values.hasOwnProperty("thumbnail")) {
+    if (!values.thumbnail) {
+      errors.thumbnail = "Please upload a thumbnail";
+    }
+    if (Object.keys(values.thumbnail).length == 0) {
+      errors.thumbnail = "Please upload a thumbnail";
+    }
+  }
+
+  if (values.hasOwnProperty("trailer")) {
+    if (!values.trailer) {
+      errors.trailer = "Please upload a trailer";
+    }
+    if (Object.keys(values.trailer).length == 0) {
+      errors.trailer = "Please upload a trailer";
+    }
+  }
+
+  if (values.hasOwnProperty("description")) {
+    if (!values.description) {
+      errors.description = "Please enter a description";
+    }
+  }
+  if (values.hasOwnProperty("description")) {
+    if (!values.description) {
+      errors.description = "Please enter a description";
+    }
+  }
+  if (values.hasOwnProperty("tier")) {
+    if (!values.tier) {
+      errors.tier = "Please select a tier";
+    }
+  }
+  if (values.hasOwnProperty("currency")) {
+    if (!values.currency) {
+      errors.currency = "Please enter a currency";
+    }
+  }
+  if (values.hasOwnProperty("amount")) {
+    if (!values.amount) {
+      errors.amount = "Please enter an amount";
+    }
+  }
+  if (values.hasOwnProperty("welcome")) {
+    if (!values.welcome) {
+      errors.welcome = "Please enter a welcome message";
+    }
+  }
+  if (values.hasOwnProperty("congratulations")) {
+    if (!values.congratulations) {
+      errors.congratulations = "Please enter a congratulations message";
     }
   }
 

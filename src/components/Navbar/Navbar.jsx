@@ -24,14 +24,58 @@ const navLinks = [
         path: "/add/courses",
       },
     ],
-    state: "isCourseClicked",
-    dispatchMethod: navMenuActions.clickCourses,
   },
-  { text: "Category", icon: <Category />, path: "/categories", auth: ["admin", "instructor"], state: "isCategoryClicked", dispatchMethod: navMenuActions.clickCategory },
-  { text: "Instructors", icon: <Groups />, path: "/instructors", auth: ["admin", "instructor"], state: "isInstructorsClicked", dispatchMethod: navMenuActions.clickInstructors },
+  { text: "Concepts", icon: <MenuBook />, path: "/concepts", auth: ["admin", "instructor"] },
+  {
+    text: "Categories",
+    icon: <Category />,
+    path: "/categories",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Categories",
+        path: "/categories",
+      },
+      {
+        text: "Add Category",
+        path: "/categories/add",
+      },
+    ],
+  },
+  {
+    text: "Instructors",
+    icon: <Groups />,
+    path: "/instructors",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Instructors",
+        path: "/instructors",
+      },
+      {
+        text: "Add Instructors",
+        path: "/add/instructors",
+      },
+    ],
+  },
   { text: "Q & A", icon: <QuestionAnswer />, path: "/qna", auth: ["admin", "instructor"] },
-  { text: "Users", icon: <Group />, path: "/users", auth: ["admin", "instructor"], state: "isUsersClicked" },
-  { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"], state: "isSubscriptionsClicked" },
+  {
+    text: "Users",
+    icon: <Group />,
+    path: "/users",
+    auth: ["admin", "instructor"],
+    subLinks: [
+      {
+        text: "All Users",
+        path: "/users",
+      },
+      {
+        text: "Add User",
+        path: "/add/user",
+      },
+    ],
+  },
+  { text: "Subscriptions", icon: <Subscriptions />, path: "/subscriptions", auth: ["admin", "instructor"] },
 ];
 const NavBar = (props) => {
   const state = store.getState();
@@ -53,13 +97,14 @@ const NavBar = (props) => {
     <div className={`navBar ${collapsed ? 'collapsed': 'extended'}`}>
       {/* Logo */}
       <Grid container justify="center">
-        <Link
+        {/* <Link
           to="/"
           className={`logo 
                         ${collapsed ? "logoSmall" : "logoBig"}`}
         >
           Elearning
-        </Link>
+        </Link> */}
+        <img src="images/logo-white.png" className="logo-img" />
       </Grid>
       {/* Navigation Buttons */}
       <List component="nav">

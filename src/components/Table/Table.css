@@ -20,6 +20,16 @@
 }
 .container .MuiDataGrid-cell.table-cell {
   justify-content: center;
+  max-height: unset !important;
+  border-bottom: none;
+}
+.container .MuiDataGrid-root .MuiDataGrid-row {
+  max-height: unset !important;
+  align-items: center;
+  border-bottom: 1px solid rgba(224, 224, 224, 1);
+}
+.container .MuiDataGrid-root .MuiDataGrid-cell {
+  border-bottom: none;
 }
 .table-search {
   width: 30%;
@@ -32,4 +42,9 @@
 }
 .container .MuiCircularProgress-root {
   color: var(--orange);
+}
+.table-image {
+  height: 150px;
+  width: 150px;
+  padding: 10px;
 }

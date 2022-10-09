@@ -1,5 +1,5 @@
 import { Delete, Menu } from "@mui/icons-material";
-import { Grid } from "@mui/material";
+import { DialogContentText, Grid } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import Input from "../../../components/Input/Input";
@@ -9,15 +9,31 @@ import { useDispatch, useSelector } from "react-redux";
 import DialogComponent from "../../../components/Dialog/DialogComponent";
 import Unit from "./Unit";
 import { curriculumActions } from "../../../store/curriculum-slice";
+import SelectBox from "../../../components/Select/SelectBox";
+import LinkConceptDialog from "./LinkConceptDialog";
 
 const CurriculumSection = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const [unitCount, setUnitCount] = useState([0]);
   const [concept, setConcept] = useState();
   const units = props.element ? props.element.units : [];
+  const errors = useSelector((state) => state.curriculum.errors);
+  const [sectionError, setSectionError] = useState(false);
 
   const [name, setName] = useState();
-  const model = useRef();
+  // const model = useRef();
+
+  useEffect(() => {
+    setSectionError(false);
+    for (let key in errors) {
+      const ids = key.split("_");
+
+      if (ids[0] == props.num) {
+        setSectionError(true);
+        break;
+      }
+    }
+  }, [errors]);
 
   useEffect(() => {
     if (props.element == null) {
@@ -85,6 +101,7 @@ const CurriculumSection = (props) => {
           name: c.name,
           isConceptLink: true,
           loId: c._id,
+          conceptId: concept._id,
           conceptName: concept.name,
         })
       );
@@ -154,8 +171,8 @@ const CurriculumSection = (props) => {
   };
 
   return (
-    <div className="section mt-3">
-      <div className="section-head">
+    <div className={`section mt-3 ${sectionError && "error-border"}`}>
+      <div className="section-head ">
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item onClick={toggleCollapse} xs={11}>
             <Grid container spacing={2}>
@@ -177,7 +194,17 @@ const CurriculumSection = (props) => {
       </div>
       {!collapsed && (
         <div className="section-body">
-          <Input label="Section Name" value={name} id={"name"} type="text" name={"name"} onChange={handleChange} placeholder="Please enter the Section name" hideLabel={false} />
+          <Input
+            label="Section Name"
+            value={name}
+            id={"name"}
+            type="text"
+            name={"name"}
+            onChange={handleChange}
+            placeholder="Please enter the Section name"
+            hideLabel={false}
+            error={errors[`${props.num}_0_name`]}
+          />
           <DragDropContext onDragEnd={onDragEnd}>
             <Droppable droppableId={`0${props.num - 1}`}>
               {(provided) => (
@@ -195,14 +222,25 @@ const CurriculumSection = (props) => {
               <CustomButton name="Add Unit" color="light-orange" onclick={addUnit} />
             </Grid>
             <Grid item xs={6}>
-              <CustomButton
+              <LinkConceptDialog setValue={handleConceptChange} />
+              {/* <CustomButton
                 name="Link Concept"
                 color="light-orange"
                 onclick={() => {
                   model.current.handleClickOpen();
                 }}
               />
-              <DialogComponent ref={model} setValue={handleConceptChange} />
+              <DialogComponent
+                ref={model}
+                setValue={handleConceptChange}
+                title={"Select Concept"}
+                body={
+                  <>
+                    <DialogContentText>Please select a concept</DialogContentText>
+                    <SelectBox value={value} id="concept" name="concept" onChange={handleChange} placeholder={"Select a concept"} hideLabel={true} values={concepts} />
+                  </>
+                }
+              /> */}
             </Grid>
           </Grid>
         </div>

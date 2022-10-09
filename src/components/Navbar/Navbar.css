@@ -43,3 +43,8 @@
 .logoSmall {
   font-size: 1em;
 }
+.logo-img {
+  height: 65px;
+  width: 160px;
+  margin: 10px 30px 0px;
+}

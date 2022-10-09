@@ -13,9 +13,24 @@ const QuestionCurriculum = (props) => {
   const [answers, setAnswers] = useState([]);
   const [answerCount, setAnswerCount] = useState([0, 1]);
   const [correctAnswer, setCorrectAnswer] = useState();
+  const errors = useSelector((state) => state.curriculum.errors);
+  const [errorKeys, setErrorKeys] = useState({});
 
   const dispatch = useDispatch();
   let q = props.question;
+
+  useEffect(() => {
+    // setErrorKeys({});
+    for (let key in errors) {
+      const ids = key.split("_");
+
+      if (ids[0] == props.sectionId + 1 && ids[1] == props.unitId + 1 && ids[2] == "quiz" && ids[3] == props.num) {
+        const temp = errorKeys;
+        temp[ids[4]] = errors[key];
+        setErrorKeys({ ...temp });
+      }
+    }
+  }, [errors]);
 
   const handleAnswerChange = (index, value) => {
     let temp = [...answers];
@@ -106,7 +121,7 @@ const QuestionCurriculum = (props) => {
         id: props.num,
         title: "",
         explanation: "",
-        correctAnswer: "",
+        correctAnswer: 0,
         answers: [],
       };
       props.handleQuizChange(props.num - 1, { ...question });
@@ -114,7 +129,7 @@ const QuestionCurriculum = (props) => {
   }, []);
 
   return (
-    <div className="section mb-2">
+    <div className={`section mb-2 ${Object.keys(errorKeys).length > 0 && "error-border"}`}>
       <div className="section-head">
         <Grid container justifyContent="space-between">
           <Grid item xs={11} onClick={toggleCollapse}>
@@ -135,7 +150,7 @@ const QuestionCurriculum = (props) => {
       {!collapsed && (
         <div className="section-body">
           <InputLabel>Question</InputLabel>
-          <RichEditor style="quiz" callback={handleQuestionChange} content={question} />
+          <RichEditor style="quiz" callback={handleQuestionChange} content={question} error={errorKeys.title} />
           <InputLabel className="mt-2 mb-2">Answers</InputLabel>
 
           {answerCount.map((elem, index) => (
@@ -152,6 +167,7 @@ const QuestionCurriculum = (props) => {
                   callback={(value) => {
                     handleAnswerChange(index, value);
                   }}
+                  error={errorKeys.answers && (answers[index] == undefined || answers[index] == "<p></p>\n") && errorKeys.answers}
                 />
               </Grid>
               <Grid item xs={1}>
@@ -164,7 +180,7 @@ const QuestionCurriculum = (props) => {
           </h4>
 
           <InputLabel className="mt-3">Explanation for the correct answer</InputLabel>
-          <RichEditor style="quiz" callback={handleExplanationChange} content={explanation} />
+          <RichEditor style="quiz" callback={handleExplanationChange} content={explanation} error={errorKeys.explanation} />
         </div>
       )}
     </div>

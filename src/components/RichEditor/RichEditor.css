@@ -4,12 +4,18 @@
   height: 300px;
   max-height: 500px;
 }
+.editor-wrapper.error-richeditor {
+  border-color: #d32f2f;
+}
 .editor-wrapper.quiz {
   height: 200px;
 }
 
 .editor-toolbar {
   border-bottom: 1px solid #c4c4c4;
+}
+.editor-toolbar.error-richeditor {
+  border-bottom: 1px solid #d32f2f;
 }
 .editor {
   height: 220px !important;

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
-function useForm(callback, validate, val, reduxDispatch, onChange) {
+function useForm(callback, validate, val, reduxDispatch, onChange, requiredValues) {
   //Hook to store states of values
   const [values, setValues] = useState({
     ...val,
   });
+
   //Hook to store errors
   const [errors, setErrors] = useState({});
   //Hook to store submitting status
@@ -14,8 +15,27 @@ function useForm(callback, validate, val, reduxDispatch, onChange) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
-    reduxDispatch(name, value);
-    onChange({ ...values, [name]: value });
+    if (reduxDispatch) {
+      reduxDispatch(name, value);
+    }
+    if (!value) {
+      if (requiredValues.hasOwnProperty(name)) {
+        let obj = {};
+        obj[name] = value;
+        const tempError = validate(obj);
+        setErrors({ ...errors, ...tempError });
+      }
+    }
+    if (errors.hasOwnProperty(name)) {
+      if (value) {
+        let temp = errors;
+        delete temp[name];
+        setErrors(temp);
+      }
+    }
+    if (onChange) {
+      onChange({ ...values, [name]: value });
+    }
   };
 
   const handleFileSubmit = ({ file }, name) => {
@@ -26,7 +46,11 @@ function useForm(callback, validate, val, reduxDispatch, onChange) {
   const handleSubmit = (e) => {
     e.preventDefault();
     //Sets errors if there are errors
-    setErrors(validate(values));
+    for (var key in requiredValues) {
+      requiredValues[key] = values[key];
+    }
+    setErrors(validate(requiredValues));
+    console.log(errors);
     setIsSubmitting(true);
   };
 

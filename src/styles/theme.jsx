@@ -16,7 +16,13 @@ const theme = createTheme({
     },
     tertiary: {
       light: "#fff",
-      main: "#000",
+      main: "#d32f2f",
+      dark: "#ba000d",
+      contrastText: "#000",
+    },
+    danger: {
+      light: "#ff7961",
+      main: "#d32f2f",
       dark: "#ba000d",
       contrastText: "#000",
     },

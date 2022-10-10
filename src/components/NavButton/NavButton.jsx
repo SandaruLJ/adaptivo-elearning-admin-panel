@@ -7,6 +7,7 @@ import { navMenuActions } from "../../store/navmenu-slice";
 
 const NavButton = (props) => {
   const [collapse, setCollapse] = useState(true);
+  const state = useSelector((state) => state.navMenu[props.state]);
   const navMenu = useSelector((state) => state.navMenu);
 
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const NavButton = (props) => {
           dispatch(navMenuActions.handleSubMenuChange({ subMenu: `All ${props.text}` }));
         }} // Classname when the link is active
       >
-        <ListItemIcon className={"iconRoot"}>{props.icon}</ListItemIcon>
+        <ListItemIcon className={`${props.collapsed ? "iconRoot-collapsed": "iconRoot"}`}>{props.icon}</ListItemIcon>
         <ListItemText className={"textPrimary"} primary={props.text} />
       </ListItem>
       {props.subLinks &&

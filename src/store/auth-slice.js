@@ -5,7 +5,7 @@ const authSlice = createSlice({
   initialState: { user: {}, profile: {} },
   reducers: {
     setUser(state, actions) {
-      state.role = actions.payload;
+      state.user = actions.payload;
     },
     updateProfile(state, actions) {
       state.profile = actions.payload;

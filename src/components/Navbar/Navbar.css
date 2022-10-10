@@ -10,6 +10,8 @@
   transition-duration: var(--animDuration);
   background-size: cover;
   background-repeat: round;
+  transition: "ease-in";
+  transition-duration: 250ms;
 }
 
 .extended {
@@ -30,6 +32,8 @@
   text-align: center;
   display: block;
   width: 100%;
+  transition: "ease-in";
+  transition-duration: 250ms;
 }
 
 .logoBig {

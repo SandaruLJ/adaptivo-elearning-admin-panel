@@ -11,6 +11,8 @@ import { Authenticator, View, useTheme, Text } from "@aws-amplify/ui-react";
 import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import "../src/styles/authenticator.css";
+import store from './store';
+import { authActions } from './store/auth-slice';
 
 Amplify.configure(awsExports);
 
@@ -29,20 +31,29 @@ function App() {
 
   return (
     <Authenticator className="auth" hideSignUp={true} variation="modal" components={customAuthComponents}>
-      {({ signOut }) => (
-        <div className="App">
-          <ThemeProvider theme={theme}>
-            <Router>
-              <NavBar />
-              <TopBar />
-              <div className="main">
-                <Main />
-                {/* <button onClick={signOut}>Sign out</button> */}
-              </div>
-            </Router>
-          </ThemeProvider>
-        </div>
-      )}
+      {({ signOut, user }) => {
+        const userObject = JSON.parse(JSON.stringify(user))
+        let role = ''
+        if (userObject.pool.userPoolId === 'ap-south-1_HwrCqDg1Q') {
+          role = 'admin'
+        }
+        userObject.role = role;
+        store.dispatch(authActions.setUser(userObject));
+
+        return (
+          <div className="App">
+            <ThemeProvider theme={theme}>
+              <Router>
+                <NavBar />
+                <TopBar signOut={signOut} />
+                <div className="main">
+                  <Main />
+                </div>
+              </Router>
+            </ThemeProvider>
+          </div>
+        )
+      }}
     </Authenticator>
   );
 }
